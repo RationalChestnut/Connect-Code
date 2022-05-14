@@ -2,28 +2,32 @@ import React from "react";
 import Navitem from "./Navitem";
 import NavLogo from "./NavLogo";
 import styles from "./Navbar.module.css";
-import navAnimationHandler from "./NavAnimationHandler";
-import hideNavbar from "./HideNavbar";
 import { data } from "./Navbardata";
+import { SignupButton } from "./SignupButton";
+import { GiHamburgerMenu } from "react-icons/gi";
+
 export const Navbar = (props) => {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo} onClick={hideNavbar}>
+      <div className={styles.logo}>
         <NavLogo url="/" name="Connect Code" />
       </div>
       <ul className={styles.navLinks}>
         {data.map((navData) => {
           return (
-            <li>
+            <li className={styles.navItem}>
               <Navitem key={navData.id} url={navData.url} name={navData.name} />
             </li>
           );
         })}
       </ul>
-      <div className={styles.burger} onClick={navAnimationHandler}>
-        <div className="line1"></div>
-        <div className="line2"></div>
-        <div className="line3"></div>
+      <div className={styles.signupContainer}>
+        <p>Login</p>
+        {/* <SignupButton text="" /> */}
+        <SignupButton text="Signup" />
+      </div>
+      <div className={styles.burgerContainer}>
+        <GiHamburgerMenu className={styles.burger} />
       </div>
     </nav>
   );

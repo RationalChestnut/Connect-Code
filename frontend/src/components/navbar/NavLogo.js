@@ -7,7 +7,7 @@ export const NavLogo = (props) => {
   return (
     <>
       <Link to={url} className={styles.logo}>
-        <h4>{name}</h4>
+        <p className={styles.logoText}>{name}</p>
       </Link>
     </>
   );
