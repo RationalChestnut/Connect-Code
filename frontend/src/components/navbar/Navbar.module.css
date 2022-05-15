@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 1% 2%;
+  border-bottom: 1px solid rgb(229, 229, 229);
 }
 
 .navLinks {
@@ -22,6 +23,11 @@
 .link {
   text-decoration: none;
   color: black;
+  transition: ease-in 0.15s;
+}
+
+.link:hover {
+  color: #228bd6;
 }
 
 .logo {
@@ -52,14 +58,31 @@
   border-radius: 20px;
   padding: 5px 15px;
   width: 100%;
+  box-shadow: inset 0 0 0 0 #228bd6;
+  transition: ease-out 0.4s;
+  outline: none;
+  color: black;
 }
 
 .signupText {
-  color: black;
+  color: inherit;
   text-decoration: none;
 }
 
 .burgerContainer {
+  display: none;
+}
+.burgerContainer:hover {
+  cursor: pointer;
+}
+
+.signupButton:hover {
+  cursor: pointer;
+  box-shadow: inset 80px 0 0 0 #228bd6;
+  color: white;
+}
+
+.mobileNavLinks {
   display: none;
 }
 
@@ -91,20 +114,59 @@
 }
 @media screen and (max-width: 700px) {
   .navbar {
-    justify-content: start;
-    align-items: center;
+    justify-content: space-between;
   }
   .logo {
     text-align: start;
+    width: 100%;
   }
   .logoText {
-    padding-top: 5px;
-    padding-left: 5%;
+    padding-left: 4%;
   }
   .navLinks {
     display: none;
   }
   .signupContainer {
     display: none;
+  }
+  .burgerContainer {
+    display: block;
+  }
+  .mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: absolute;
+    top: 4%;
+    left: 0;
+    right: 0;
+    list-style: none;
+  }
+  .mobileNavItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5%;
+    animation: slide-up 0.4s ease;
+  }
+  .mobileSignupContainer {
+    padding-top: 5%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgb(229, 229, 229);
+    animation: slide-up 0.4s ease;
+  }
+}
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

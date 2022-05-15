@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Navitem from "./Navitem";
 import NavLogo from "./NavLogo";
 import styles from "./Navbar.module.css";
 import { data } from "./Navbardata";
 import { SignupButton } from "./SignupButton";
-import { GiHamburgerMenu } from "react-icons/gi";
+import Burger from "./burger/Burger";
 
-export const Navbar = (props) => {
+export const Navbar = () => {
+  const [isBurger, setIsBurger] = useState(false);
+
   return (
     <nav className={styles.navbar}>
+      <div></div>
       <div className={styles.logo}>
         <NavLogo url="/" name="Connect Code" />
       </div>
@@ -22,13 +25,43 @@ export const Navbar = (props) => {
         })}
       </ul>
       <div className={styles.signupContainer}>
-        <p>Login</p>
+        <Navitem key={5} url={"/login"} name="Login" />
         {/* <SignupButton text="" /> */}
         <SignupButton text="Signup" />
       </div>
       <div className={styles.burgerContainer}>
-        <GiHamburgerMenu className={styles.burger} />
+        <Burger setBurgerStatus={setIsBurger} burgerStatus={isBurger} />
       </div>
+      {isBurger ? (
+        <div>
+          <ul className={styles.mobileNavLinks}>
+            {data.map((navData) => {
+              return (
+                <li className={styles.mobileNavItem}>
+                  <Navitem
+                    key={navData.id}
+                    url={navData.url}
+                    name={navData.name}
+                  />
+                </li>
+              );
+            })}
+
+            <div className={styles.mobileSignupContainer}>
+              <div>
+                <Navitem key={5} url={"/login"} name="Login" />
+              </div>
+
+              <SignupButton
+                text="Signup"
+                className={styles.mobileSignupButton}
+              />
+            </div>
+          </ul>
+        </div>
+      ) : (
+        <></>
+      )}
     </nav>
   );
 };
