@@ -5,11 +5,11 @@ export const NavLogo = (props) => {
   const { url, name } = props;
 
   return (
-    <>
+    <div onClick={props.onClick}>
       <Link to={url} className={styles.logo}>
         <p className={styles.logoText}>{name}</p>
       </Link>
-    </>
+    </div>
   );
 };
 

@@ -13,7 +13,15 @@ export const Navbar = () => {
     <nav className={styles.navbar}>
       <div></div>
       <div className={styles.logo}>
-        <NavLogo url="/" name="Connect Code" />
+        <NavLogo
+          url="/"
+          name="Connect Code"
+          onClick={() => {
+            if (isBurger) {
+              setIsBurger(false);
+            }
+          }}
+        />
       </div>
       <ul className={styles.navLinks}>
         {data.map((navData) => {
@@ -42,6 +50,11 @@ export const Navbar = () => {
                     key={navData.id}
                     url={navData.url}
                     name={navData.name}
+                    onClick={() => {
+                      if (isBurger) {
+                        setIsBurger(false);
+                      }
+                    }}
                   />
                 </li>
               );
@@ -49,12 +62,26 @@ export const Navbar = () => {
 
             <div className={styles.mobileSignupContainer}>
               <div>
-                <Navitem key={5} url={"/login"} name="Login" />
+                <Navitem
+                  key={5}
+                  url={"/login"}
+                  name="Login"
+                  onClick={() => {
+                    if (isBurger) {
+                      setIsBurger(false);
+                    }
+                  }}
+                />
               </div>
 
               <SignupButton
                 text="Signup"
                 className={styles.mobileSignupButton}
+                onClick={() => {
+                  if (isBurger) {
+                    setIsBurger(false);
+                  }
+                }}
               />
             </div>
           </ul>

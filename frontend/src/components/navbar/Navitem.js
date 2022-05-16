@@ -5,7 +5,7 @@ export const Navitem = (props) => {
   const { url, name, token } = props;
 
   return (
-    <div className={styles.navItemContainer}>
+    <div className={styles.navItemContainer} onClick={props.onClick}>
       <Link to={url} className={styles.navItem}>
         <p className={styles.link}>{name}</p>
       </Link>

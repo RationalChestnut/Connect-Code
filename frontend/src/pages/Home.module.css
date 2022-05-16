@@ -1,0 +1,121 @@
+.redPuzzlePiece {
+  width: 50%;
+  position: relative;
+  left: 6%;
+  transform: scale(1.1);
+}
+
+.yellowPuzzlePiece {
+  width: 50%;
+  position: relative;
+  right: 6%;
+  transform: scale(1.1);
+}
+
+.puzzlePieces {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+}
+
+.actionText {
+  z-index: 1;
+  font-size: 42px;
+  text-align: center;
+  padding-top: 10%;
+}
+
+.pitch {
+  font-size: 2rem;
+}
+
+.halfPuzzle {
+  display: none;
+}
+
+.actionButton {
+  border-radius: 10px;
+  padding: 15px 40px;
+  background-color: #228bd6;
+  border: none;
+  outline: none;
+  color: white;
+  margin-top: 2%;
+  font-size: 1rem;
+}
+
+.actionButton:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+  .puzzlePieces {
+    margin-top: 4%;
+  }
+
+  .redPuzzlePiece {
+    transform: scale(1.3);
+    left: 3%;
+  }
+
+  .yellowPuzzlePiece {
+    transform: scale(1.3);
+    right: 3%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .puzzlePieces {
+    margin-top: 4%;
+  }
+
+  .redPuzzlePiece {
+    transform: scale(1.4);
+    left: 1%;
+  }
+
+  .yellowPuzzlePiece {
+    transform: scale(1.4);
+    right: 1%;
+  }
+
+  .actionText {
+    font-size: 32px;
+  }
+
+  .pitch {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .puzzlePieces {
+    margin-top: 4%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .yellowPuzzlePiece {
+    display: none;
+  }
+
+  .redPuzzlePiece {
+    display: none;
+  }
+
+  .actionText {
+    font-size: 32px;
+    padding-top: 20%;
+  }
+
+  .halfPuzzle {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .actionText {
+    font-size: 30px;
+  }
+}
