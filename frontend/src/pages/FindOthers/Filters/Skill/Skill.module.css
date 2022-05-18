@@ -1,0 +1,19 @@
+.skillContainer {
+  background-color: #228bd6;
+  width: fit-content;
+  padding: 1% 5%;
+  color: white;
+  border-radius: 15px;
+  display: flex;
+  font-size: 14px;
+  margin: 1%;
+}
+
+.cancel {
+  padding-left: 20px;
+  font-weight: 800;
+}
+
+.cancel:hover {
+  cursor: pointer;
+}

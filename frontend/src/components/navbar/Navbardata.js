@@ -1,7 +1,7 @@
 export const data = [
   {
     id: 1,
-    url: "",
+    url: "/find-others",
     name: "Find Others",
   },
   {

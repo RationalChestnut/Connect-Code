@@ -7,7 +7,10 @@ export const NavLogo = (props) => {
   return (
     <div onClick={props.onClick}>
       <Link to={url} className={styles.logo}>
-        <p className={styles.logoText}>{name}</p>
+        <p className={styles.logoText}>
+          <span className={styles.red}>Connect</span>
+          <span className={styles.yellow}>Code</span>
+        </p>
       </Link>
     </div>
   );

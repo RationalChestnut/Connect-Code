@@ -46,6 +46,7 @@
 
 .actionButton:hover {
   cursor: pointer;
+  background-color: #1f7fc4;
 }
 
 @media screen and (max-width: 1200px) {
@@ -117,5 +118,22 @@
 @media screen and (max-width: 600px) {
   .actionText {
     font-size: 30px;
+  }
+  .actionButton {
+    padding: 11.25px 30px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .halfPuzzle {
+    display: block;
+    width: 100%;
+    transform: scale(1.2);
+    margin-top: 7%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .halfPuzzle {
+    transform: scale(1.4);
+    margin-top: 15%;
   }
 }

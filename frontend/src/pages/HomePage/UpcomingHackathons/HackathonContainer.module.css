@@ -1,0 +1,13 @@
+.heading {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 2%;
+  margin-top: 3%;
+}
+
+.hackathons {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}

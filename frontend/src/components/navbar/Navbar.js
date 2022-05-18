@@ -47,8 +47,8 @@ export const Navbar = () => {
               return (
                 <li className={styles.mobileNavItem}>
                   <Navitem
-                    key={navData.id}
                     url={navData.url}
+                    key={navData.id}
                     name={navData.name}
                     onClick={() => {
                       if (isBurger) {
@@ -63,7 +63,6 @@ export const Navbar = () => {
             <div className={styles.mobileSignupContainer}>
               <div>
                 <Navitem
-                  key={5}
                   url={"/login"}
                   name="Login"
                   onClick={() => {

@@ -1,0 +1,21 @@
+.intro {
+  padding-top: 17%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .intro {
+    padding-top: 20%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .intro {
+    padding-top: 22.5%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .intro {
+    padding-top: 45%;
+  }
+}

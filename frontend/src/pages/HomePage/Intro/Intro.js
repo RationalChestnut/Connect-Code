@@ -1,14 +1,12 @@
 import React from "react";
-import "animate.css";
+import styles from "./Intro.module.css";
+import redPuzzlePiece from "../../../images/puzzle_red.png";
+import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
+import halfPuzzle from "../../../images/half_puzzle.png";
 
-import styles from "./Home.module.css";
-import redPuzzlePiece from "../images/puzzle_red.png";
-import yellowPuzzlePiece from "../images/puzzle_yellow.png";
-import halfPuzzle from "../images/half_puzzle.png";
-
-const Home = () => {
+const Intro = () => {
   return (
-    <section className={styles.home}>
+    <section className={styles.intro}>
       <div className={styles.puzzlePieces}>
         <img
           src={redPuzzlePiece}
@@ -37,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Intro;
