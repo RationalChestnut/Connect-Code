@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ProfileContainer.module.css";
-import { profiles } from "./ProfileData";
-import Profile from "./Profile";
+import { profiles } from "../../../data/ProfileData";
+import Profile from "../../../components/Profile/Profile";
 const ProfileContainer = () => {
   return (
     <section className={styles.profile}>

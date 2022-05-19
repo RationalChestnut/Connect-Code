@@ -1,6 +1,6 @@
-import panther from "../../../images/pantherHacksImage.jpeg";
-import block from "../../../images/blockchain_image.jpeg";
-import go from "../../../images/go_hack_image.png";
+import panther from "../images/pantherHacksImage.jpeg";
+import block from "../images/blockchain_image.jpeg";
+import go from "../images/go_hack_image.png";
 export const data = [
   {
     id: 1,

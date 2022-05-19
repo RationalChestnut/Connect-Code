@@ -1,7 +1,7 @@
 import React from "react";
-import { Hackathon } from "./Hackathon";
+import { Hackathon } from "../../../components/Hackathon/Hackathon";
 import styles from "./HackathonContainer.module.css";
-import { data } from "./HackathonData.js";
+import { data } from "../../../data/HackathonData.js";
 export const HackathonContainer = () => {
   return (
     <section className={styles.hackathonContainer}>

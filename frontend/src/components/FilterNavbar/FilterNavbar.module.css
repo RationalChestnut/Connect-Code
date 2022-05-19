@@ -1,0 +1,14 @@
+.filterNavbarContainer {
+  width: 100%;
+  border-bottom: 1px solid rgb(229, 229, 229);
+  padding: 1% 5%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.filter {
+  font-size: 24px;
+  color: #228bd6;
+  cursor: pointer;
+}

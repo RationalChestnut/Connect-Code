@@ -26,7 +26,7 @@ export const Navbar = () => {
       <ul className={styles.navLinks}>
         {data.map((navData) => {
           return (
-            <li className={styles.navItem}>
+            <li className={styles.navItem} key={navData.id}>
               <Navitem key={navData.id} url={navData.url} name={navData.name} />
             </li>
           );
@@ -43,12 +43,12 @@ export const Navbar = () => {
       {isBurger ? (
         <div>
           <ul className={styles.mobileNavLinks}>
-            {data.map((navData) => {
+            {data.map((navData, index) => {
               return (
-                <li className={styles.mobileNavItem}>
+                <li className={styles.mobileNavItem} key={index}>
                   <Navitem
                     url={navData.url}
-                    key={navData.id}
+                    key={navData.name + index}
                     name={navData.name}
                     onClick={() => {
                       if (isBurger) {
