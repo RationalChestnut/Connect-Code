@@ -12,3 +12,7 @@
   color: #228bd6;
   cursor: pointer;
 }
+
+.filter:hover {
+  color: #1f7fc4;
+}

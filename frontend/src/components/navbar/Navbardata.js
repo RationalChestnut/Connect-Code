@@ -6,7 +6,7 @@ export const data = [
   },
   {
     id: 2,
-    url: "",
+    url: "/hackathons",
     name: "Hackathons",
   },
   {

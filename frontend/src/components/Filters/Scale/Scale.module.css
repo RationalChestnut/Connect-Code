@@ -88,6 +88,9 @@ input[type="range"]::-webkit-slider-thumb {
   pointer-events: auto;
   z-index: 11;
 }
+input[type="range"]::-webkit-slider-thumb:hover {
+  cursor: pointer;
+}
 
 input[type="range"]::-moz-slider-thumb {
   height: 17px;
@@ -98,4 +101,7 @@ input[type="range"]::-moz-slider-thumb {
   pointer-events: auto;
   border: none;
   z-index: 11;
+}
+input[type="range"]::-moz-slider-thumb:hover {
+  cursor: pointer;
 }

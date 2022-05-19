@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Skill } from "../../components/Filters/Skill/Skill";
 import { Scale } from "../../components/Filters/Scale/Scale";
-import styles from "./FindOthers.module.css";
+import styles from "./Filter.module.css";
 
 export const Filter = (props) => {
   const [skill, setSkill] = useState("");
