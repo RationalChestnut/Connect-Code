@@ -66,8 +66,12 @@ export const Hackathon = (props) => {
         <div className={`${styles.hackathonInfoRow} ${styles.tagsContainer}`}>
           <div className={styles.tags}>
             <BsFillTagsFill size={"20px"} />
-            {tags.map((tag) => {
-              return <div className={styles.tag}>{tag}</div>;
+            {tags.map((tag, index) => {
+              return (
+                <div key={index} className={styles.tag}>
+                  {tag}
+                </div>
+              );
             })}
           </div>
         </div>

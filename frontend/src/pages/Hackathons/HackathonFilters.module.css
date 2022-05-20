@@ -1,0 +1,72 @@
+.hackathonFiltersContainer {
+  width: 100%;
+  padding: 2%;
+}
+
+.themeContainer {
+  padding-bottom: 4%;
+  border-bottom: 1px solid black;
+}
+
+.themeForm {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.submit {
+  border: none;
+  border-radius: 10px;
+  background-color: #228bd6;
+  padding: 2% 3%;
+  color: white;
+  margin-left: 2%;
+  width: 30%;
+}
+
+.submit:hover {
+  background-color: #1f7fc4;
+  cursor: pointer;
+}
+
+.themeInput {
+  margin: 2% 0%;
+  padding: 1% 2%;
+  outline: none;
+  border: 1px solid #228bd6;
+  width: 60%;
+}
+
+.themes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1%;
+}
+
+.prizeContainer {
+  margin-top: 1%;
+  border-bottom: 1px solid black;
+}
+
+.teamsContainer {
+  margin-top: 1%;
+  border-bottom: 1px solid black;
+}
+
+.locationContainer {
+  margin-top: 1%;
+  padding-bottom: 1%;
+  border-bottom: 1px solid black;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.choice {
+  margin-left: 2%;
+}
+
+.dateContainer {
+  margin-top: 1%;
+}
