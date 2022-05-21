@@ -3,6 +3,7 @@ import styles from "./Intro.module.css";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 import halfPuzzle from "../../../images/half_puzzle.png";
+import { Link } from "react-router-dom";
 
 const Intro = () => {
   return (
@@ -29,7 +30,9 @@ const Intro = () => {
         <p className={styles.pitch}>
           Connect with others and start building today
         </p>
-        <button className={styles.actionButton}>Find Others</button>
+        <Link to="/find-others" className={styles.findOthersLink}>
+          <button className={styles.actionButton}>Find Others</button>
+        </Link>
       </div>
     </section>
   );

@@ -13,6 +13,11 @@ export const HackathonFilters = () => {
     setTheme("");
   };
 
+  const generateTodaysDate = () => {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    return currentDate;
+  };
+
   return (
     <div className={styles.hackathonFiltersContainer}>
       <div className={styles.themeContainer}>
@@ -70,11 +75,15 @@ export const HackathonFilters = () => {
         <h1>Date</h1>
         <div className={styles.row}>
           <p>From</p>
-          <input type="date" />
+          <input
+            type="date"
+            className={styles.dateInput}
+            // min={generateTodaysDate}
+          />
         </div>
         <div className={styles.row}>
           <p>To</p>
-          <input type="date" />
+          <input type="date" className={styles.dateInput} />
         </div>
       </div>
     </div>

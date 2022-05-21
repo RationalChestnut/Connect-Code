@@ -61,9 +61,14 @@
 .row {
   display: flex;
   align-items: center;
+  margin: 2% 0% 2% 4%;
 }
 
 .choice {
+  margin-left: 2%;
+}
+
+.dateInput {
   margin-left: 2%;
 }
 

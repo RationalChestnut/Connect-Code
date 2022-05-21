@@ -114,17 +114,24 @@
 
 @media screen and (max-width: 1400px) {
   .hackathon {
-    width: 70%;
+    width: 90%;
   }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 900px) {
   .hackathon {
-    width: 80%;
+    padding: 3%;
   }
 }
 @media screen and (max-width: 850px) {
   .hackathon {
     width: 90%;
+    padding: 2%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .hackathon {
+    width: 100%;
+    margin: 4% 0%;
   }
 }
 @media screen and (max-width: 650px) {

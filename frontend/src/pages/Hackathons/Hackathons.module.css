@@ -8,9 +8,9 @@
   height: 100%;
   padding: 0% 1%;
   display: grid;
-  grid-template-columns: 6fr 12fr;
+  grid-template-columns: 3fr 12fr;
+  grid-gap: 10%;
 }
-
 .filterNavbarContainer {
   width: 100%;
   height: fit-content;
@@ -43,6 +43,13 @@
 @media screen and (max-width: 1400px) {
   .hackathonPage {
     grid-template-columns: 5fr 12fr;
+    grid-gap: 5%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .hackathonPage {
+    grid-template-columns: 5fr 12fr;
+    grid-gap: 2%;
   }
 }
 
@@ -66,5 +73,10 @@
   }
   .hideFilter {
     display: none;
+  }
+
+  .hackathonPage {
+    grid-template-columns: 1fr;
+    padding: 2% 5%;
   }
 }

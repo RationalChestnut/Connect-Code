@@ -1,0 +1,196 @@
+.puzzlePieces {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1%;
+}
+
+.puzzlePiece {
+  width: 8%;
+}
+
+.redPuzzlePiece {
+  position: relative;
+  left: 1%;
+}
+
+.yellowPuzzlePiece {
+  position: relative;
+  right: 1%;
+}
+
+.loginText {
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 2%;
+  text-align: center;
+}
+
+.formContainer {
+  width: 20%;
+  margin: 0 auto;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 0.8% 1%;
+}
+
+.formInputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formLabel {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.formInput {
+  margin-bottom: 5px;
+  padding: 3px 2px;
+  font-size: 14px;
+}
+
+.loginButton {
+  font-size: 14px;
+  padding: 2.8% 2.5%;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #3298e0;
+  border: none;
+  color: white;
+}
+
+.loginButton:hover {
+  cursor: pointer;
+  background-color: #2786ca;
+}
+
+.tipText {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.red {
+  color: #f74a6a;
+}
+
+.yellow {
+  color: #ffe51f;
+}
+
+.questionContainer {
+  display: flex;
+  align-items: center;
+}
+
+.questionAge {
+  margin-left: 1.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.questionAge:hover {
+  cursor: pointer;
+}
+
+.questionQuestionContainer {
+  position: relative;
+}
+
+.questionExplanation {
+  width: 120px;
+  text-align: center;
+  background-color: rgb(194, 194, 194);
+  position: absolute;
+  top: 0;
+  left: 14%;
+  padding: 3%;
+  display: none;
+  border-radius: 20px;
+}
+
+.questionContainer:hover .questionExplanation {
+  display: block;
+  cursor: pointer;
+}
+
+.linkToOtherPage {
+  color: black;
+}
+
+@media screen and (max-width: 1500px) {
+  .puzzlePiece {
+    width: 10%;
+  }
+  .formContainer {
+    width: 25%;
+    padding: 3%;
+  }
+}
+@media screen and (max-width: 1275px) {
+  .questionExplanation {
+    left: 16%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .formContainer {
+    width: 30%;
+  }
+  .puzzlePiece {
+    width: 12%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .formContainer {
+    width: 35%;
+  }
+  .puzzlePiece {
+    width: 14%;
+  }
+}
+@media screen and (max-width: 850px) {
+  .formContainer {
+    width: 40%;
+  }
+  .puzzlePiece {
+    width: 15%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .formContainer {
+    width: 45%;
+  }
+  .puzzlePiece {
+    width: 16%;
+  }
+}
+@media screen and (max-width: 625px) {
+  .formContainer {
+    width: 55%;
+  }
+  .puzzlePiece {
+    width: 20%;
+  }
+}
+@media screen and (max-width: 550px) {
+  .formContainer {
+    width: 70%;
+    margin-top: 3%;
+  }
+  .puzzlePiece {
+    width: 24%;
+  }
+  .tipText {
+    padding-bottom: 2%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .formContainer {
+    width: 80%;
+    margin-top: 4%;
+  }
+  .puzzlePiece {
+    width: 26%;
+  }
+}

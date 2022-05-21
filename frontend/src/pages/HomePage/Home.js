@@ -1,5 +1,4 @@
 import React from "react";
-import "animate.css";
 
 import styles from "./Home.module.css";
 import Intro from "./Intro/Intro";
