@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Profile.module.css";
 import { FiEdit } from "react-icons/fi";
-import { profiles } from "../../../data/ProfileData";
+import { profiles } from "../../../../data/ProfileData";
+import { Link } from "react-router-dom";
+
 import {
   AiOutlineGlobal,
   AiFillGithub,
@@ -29,7 +31,9 @@ export const Profile = (props) => {
     <div className={styles.profileContainer}>
       <div className={styles.bigIntro}>
         <div className={styles.editContainer}>
-          <FiEdit className={styles.editButton} />
+          <Link to={"/edit-profile"}>
+            <FiEdit className={styles.editButton} />
+          </Link>
         </div>
         <div className={styles.imageContainer}>
           <img
@@ -37,12 +41,9 @@ export const Profile = (props) => {
             alt={profiles[1].name}
             className={styles.profileImage}
           />
-          <div className={styles.imageBackground}>
-            <AiFillCamera className={styles.imageBackgroundIcon} />
-          </div>
         </div>
         <div className={styles.nameContainer}>
-          <h1>{profiles[1].name} Kowski</h1>
+          <p className={styles.nameContainer}>Tom Kowski</p>
         </div>
         <div className={styles.descriptionContainer}>
           <p>

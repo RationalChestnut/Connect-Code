@@ -1,0 +1,226 @@
+.profileContainer {
+  width: 100%;
+  height: 100%;
+  padding: 2% 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.littleIntroContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin-left: 4%;
+}
+
+.bigIntro {
+  border: 1px solid black;
+  width: 100%;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.descriptionContainer {
+  padding: 0% 20%;
+  line-height: 20px;
+}
+
+.saveContainer {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+.saveContainer:hover {
+  cursor: pointer;
+}
+
+.nameContainer {
+  margin: 2% 0%;
+}
+
+.saveIcon {
+  font-size: 36px;
+  color: #1f7fc4;
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.fileInput {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+}
+
+.fileInput:hover {
+  cursor: pointer;
+}
+
+.imageContainer:hover .imageBackgroundIcon {
+  display: block;
+}
+
+.imageBackgroundIcon {
+  font-size: 34px;
+  color: rgb(41, 41, 41);
+  background-color: rgb(143, 143, 143);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 10;
+  opacity: 60%;
+  border-radius: 100%;
+  display: none;
+  z-index: 1;
+}
+
+.profileImage {
+  border-radius: 100%;
+  object-fit: none;
+  object-position: center;
+}
+
+.imageBackgroundIcon {
+  font-size: 36px;
+  color: rgb(41, 41, 41);
+  background-color: rgb(143, 143, 143);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 60%;
+  border-radius: 100%;
+  display: none;
+}
+
+.topLittleContainer {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto(6, 1fr);
+  padding: 2%;
+  margin-bottom: 2%;
+}
+
+.firstRow {
+  padding-top: 0px;
+}
+
+.row {
+  border-bottom: 1px solid rgb(229, 229, 229);
+  padding: 2% 0%;
+  display: flex;
+  align-items: center;
+}
+
+.basicInfoInput {
+  margin-left: 1%;
+}
+
+.bottomLittleContainer {
+  border: 1px solid black;
+  height: 100%;
+  width: 100%;
+  display: grid;
+}
+
+.personalWebsite {
+  color: black;
+  text-decoration: none;
+}
+.front {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  margin-left: 2%;
+}
+
+.twitter {
+  color: #55acee;
+}
+
+.insta {
+  color: #d93d56;
+}
+
+.socialRow {
+  display: grid;
+  align-items: center;
+  border-bottom: 1px solid rgb(229, 229, 229);
+  padding: 2%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.socialIcon {
+  font-size: 24px;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+input[type="text"]:focus {
+  border-bottom: 1px solid #228bd6;
+}
+
+.nameInput {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.descriptionInput {
+  resize: none;
+  outline: none;
+  font-size: 16px;
+  padding: 1%;
+}
+
+.descriptionInput:focus {
+  border: 1px solid #228bd6;
+}
+
+@media screen and (max-width: 1200px) {
+  .bigIntro {
+    padding: 5%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .profileContainer {
+    grid-template-columns: 1fr;
+    padding: 5%;
+  }
+  .littleIntroContainer {
+    margin-left: 0px;
+  }
+  .topLittleContainer {
+    margin-top: 2%;
+  }
+  .descriptionContainer {
+    padding: 0% 10%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .descriptionContainer {
+    padding: 0% 5%;
+  }
+}

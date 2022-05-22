@@ -44,7 +44,9 @@
 }
 
 .nameContainer {
-  margin: 2% 0%;
+  margin: 1% 0%;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .imageContainer {
@@ -55,31 +57,6 @@
   border-radius: 100%;
   object-fit: none;
   object-position: center;
-}
-
-.imageContainer:hover .imageBackgroundIcon {
-  display: block;
-  cursor: pointer;
-}
-.imageContainer:hover .profileImage {
-  opacity: 100%;
-  cursor: pointer;
-}
-
-.imageBackgroundIcon {
-  font-size: 36px;
-  color: rgb(41, 41, 41);
-  background-color: rgb(143, 143, 143);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 60%;
-  border-radius: 100%;
-  display: none;
 }
 
 .topLittleContainer {
