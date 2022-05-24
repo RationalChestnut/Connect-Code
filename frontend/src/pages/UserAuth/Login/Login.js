@@ -1,12 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import styles from "./Login.module.css";
 import NavLogo from "../../../components/navbar/NavLogo.js";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 
-export const Login = () => {
+export const Login = (props) => {
+  const [emailState, setEmailState] = useState("");
+  const [passwordState, setPasswordState] = useState("");
+
+  const handleUserLogin = (e) => {
+    e.preventDefault();
+    if (
+      emailState !== null &&
+      emailState !== "" &&
+      passwordState !== null &&
+      passwordState !== ""
+    ) {
+      axios
+        .post("https://ConnectCodeBackend.yxli666.repl.co/login", {
+          email: emailState,
+          password: passwordState,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            props.setUser(response.data.user);
+            console.log(response.data.user);
+          } else if (response.status === 401) {
+            console.log(response.data.error);
+          } else {
+            console.log("An unexpected error occured, please try again later");
+          }
+        })
+        .catch((error) => {
+          console.log("There is an error");
+          console.log(error);
+        });
+    } else {
+      console.log("Something happened");
+    }
+  };
   return (
     <div className={styles.loginContainer}>
       <div className={styles.puzzlePieces}>
@@ -26,7 +60,7 @@ export const Login = () => {
         <span className={styles.red}> Connect</span>
         <span className={styles.yellow}>Code</span>
       </h1>
-      <form className={styles.formContainer}>
+      <form className={styles.formContainer} onSubmit={handleUserLogin}>
         <div className={styles.formInputGroup}>
           <label htmlFor="email" className={styles.formLabel}>
             Email
@@ -35,6 +69,8 @@ export const Login = () => {
             type="email"
             name="email"
             className={styles.formInput}
+            value={emailState}
+            onChange={(e) => setEmailState(e.target.value)}
             required={true}
           />
         </div>
@@ -46,20 +82,11 @@ export const Login = () => {
             type="password"
             name="password"
             className={styles.formInput}
+            value={passwordState}
+            onChange={(e) => setPasswordState(e.target.value)}
             required={true}
           />
         </div>
-        {/* <div className={styles.formInputGroup}>
-          <label for="passwordConfirm" className={styles.formLabel}>
-            Confirm password
-          </label>
-          <input
-            type="password"
-            name="passwordConfirm"
-            className={styles.formInput}
-            required={true}
-          />
-        </div> */}
         <button type="submit" className={styles.loginButton}>
           Login
         </button>

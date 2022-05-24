@@ -10,13 +10,12 @@ import styles from "./Hackathon.module.css";
 export const Hackathon = (props) => {
   const {
     title,
-    company,
+    host,
     image,
     startDate,
     endDate,
-    status,
-    daysLeft,
-    prizeAmount,
+    location,
+    amountInPrizes,
     numParticipants,
     numPeopleWhoNeedTeams,
     tags,
@@ -31,18 +30,18 @@ export const Hackathon = (props) => {
         <div className={styles.infoRow}>
           <div className={styles.daysLeft}>
             <div className={styles.dot}></div>
-            <p>{daysLeft} days left</p>
+            <p>days left</p>
           </div>
-          <div className={styles.status}>
+          <div className={styles.location}>
             <span className={styles.globe}>
               <AiOutlineGlobal />
             </span>{" "}
-            <p className={styles.textStatus}>{status}</p>
+            <p className={styles.textStatus}>{location}</p>
           </div>
         </div>
         <div className={styles.infoRow}>
           <p className={styles.amount}>
-            <b>${prizeAmount}</b> in prizes
+            <b>${amountInPrizes}</b> in prizes
           </p>
           <p className={styles.participants}>
             <b>{numParticipants}</b> participants
@@ -57,11 +56,15 @@ export const Hackathon = (props) => {
       <div className={styles.hackathonInfo}>
         <div className={styles.hackathonInfoRow}>
           <GrFlagFill size={"20px"} display={"inline"} />
-          <p className={styles.company}>{company}</p>
+          <p className={styles.company}>{host}</p>
         </div>
         <div className={styles.hackathonInfoRow}>
           <AiFillCalendar size={"20px"} />
-          <p className={styles.date}>{`${startDate} - ${endDate}`}</p>
+          <p className={styles.date}>{`${new Date(
+            startDate
+          ).toLocaleDateString()} - ${new Date(
+            endDate
+          ).toLocaleDateString()}`}</p>
         </div>
         <div className={`${styles.hackathonInfoRow} ${styles.tagsContainer}`}>
           <div className={styles.tags}>

@@ -30,13 +30,4 @@ export const profiles = [
     skills: ["HTML", "CSS", "JavaScript", "NodeJS", "Ruby", "C#"],
     lookingFor: ["JavaScript", "NodeJS", "HTML"],
   },
-  {
-    id: 4,
-    image: profileImageThree,
-    name: "Masai",
-    languages: ["Swahili"],
-    yearsOfExperience: 7,
-    skills: ["HTML", "CSS", "JavaScript", "NodeJS", "Ruby", "C#"],
-    lookingFor: ["JavaScript", "NodeJS", "HTML"],
-  },
 ];

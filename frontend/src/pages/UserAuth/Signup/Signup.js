@@ -1,12 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import styles from "./Signup.module.css";
 import NavLogo from "../../../components/navbar/NavLogo.js";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-export const Signup = () => {
+import { BsCircleFill } from "react-icons/bs";
+import { useNavigate } from "react-router";
+
+export const Signup = (props) => {
+  const [nameState, setNameState] = useState("");
+  const [ageState, setAgeState] = useState();
+  const [emailState, setEmailState] = useState("");
+  const [passwordState, setPasswordState] = useState("");
+  const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  const navigate = useNavigate();
+
+  const register = (e) => {
+    e.preventDefault();
+
+    if (
+      nameState !== null &&
+      nameState !== "" &&
+      ageState !== null &&
+      ageState !== 0 &&
+      emailState !== null &&
+      emailState !== "" &&
+      passwordState !== null &&
+      passwordState !== "" &&
+      confirmPasswordState === passwordState
+    ) {
+      axios
+        .post("https://ConnectCodeBackend.yxli666.repl.co/register", {
+          name: nameState,
+          age: ageState,
+          password: passwordState,
+          email: emailState,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            props.setUser(res.data.user);
+            navigate("/profile");
+          } else if (res.status === 401) {
+            console.log("User already exists");
+          } else {
+            console.log("Error has occured");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      console.log("Error");
+    }
+  };
+
+  // Handle errors
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.puzzlePieces}>
@@ -27,7 +78,7 @@ export const Signup = () => {
         <span className={styles.yellow}>Code </span>
         Community!
       </h1>
-      <form className={styles.formContainer}>
+      <form className={styles.formContainer} onSubmit={register}>
         <div className={styles.formInputGroup}>
           <label htmlFor="name" className={styles.formLabel}>
             Name
@@ -35,6 +86,8 @@ export const Signup = () => {
           <input
             type="text"
             name="name"
+            value={nameState}
+            onChange={(e) => setNameState(e.target.value)}
             className={styles.formInput}
             required={true}
           />
@@ -58,8 +111,12 @@ export const Signup = () => {
             </div>
           </label>
           <input
-            type="text"
+            type="number"
             name="age"
+            min={4}
+            max={110}
+            value={ageState}
+            onChange={(e) => setAgeState(e.target.value)}
             className={styles.formInput}
             required={true}
           />
@@ -71,6 +128,8 @@ export const Signup = () => {
           <input
             type="email"
             name="email"
+            value={emailState}
+            onChange={(e) => setEmailState(e.target.value)}
             className={styles.formInput}
             required={true}
           />
@@ -83,6 +142,10 @@ export const Signup = () => {
           <input
             type="password"
             name="password"
+            minLength={6}
+            maxLength={16}
+            value={passwordState}
+            onChange={(e) => setPasswordState(e.target.value)}
             className={styles.formInput}
             required={true}
           />
@@ -94,6 +157,8 @@ export const Signup = () => {
           <input
             type="password"
             name="passwordConfirm"
+            value={confirmPasswordState}
+            onChange={(e) => setConfirmPasswordState(e.target.value)}
             className={styles.formInput}
             required={true}
           />

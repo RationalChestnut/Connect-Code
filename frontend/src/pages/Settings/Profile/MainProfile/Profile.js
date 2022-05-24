@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { FiEdit } from "react-icons/fi";
 import { profiles } from "../../../../data/ProfileData";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 import {
   AiOutlineGlobal,
@@ -11,22 +12,63 @@ import {
   AiOutlineInstagram,
   AiFillCamera,
 } from "react-icons/ai";
-export const Profile = (props) => {
-  const {
-    image,
-    name,
-    description,
-    location,
-    lanugages,
-    age,
-    yearsOfExperience,
-    skills,
-    lookingFor,
-    website,
-    github,
-    twitter,
-    instagram,
-  } = props;
+export const Profile = () => {
+  const { id } = useParams();
+  const [nameState, setNameState] = useState("");
+  const [ageState, setAgeState] = useState(0);
+  const [profilePictureState, setProfilePictureState] = useState("");
+  const [descriptionState, setDescriptionState] = useState("");
+  const [locationState, setLocationState] = useState("");
+  const [languagesState, setLanguagesState] = useState([]);
+  const [yearsOfExperienceState, setYearsOfExperienceState] = useState(0);
+  const [skillsState, setSkillsState] = useState([]);
+  const [seekingState, setSeekingState] = useState([]);
+  const [websiteState, setWebsiteState] = useState("");
+  const [githubState, setGithubState] = useState("");
+  const [twitterState, setTwitterState] = useState("");
+  const [instagramState, setInstagramState] = useState("");
+
+  const retrieveProfileData = () => {
+    axios
+      .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${id}`)
+      .then((response) => {
+        const {
+          name,
+          age,
+          profilePicture,
+          description,
+          location,
+          languages,
+          yearsOfExperience,
+          skills,
+          seeking,
+          website,
+          github,
+          twitter,
+          instagram,
+        } = response.data.user;
+        console.log(name);
+        setNameState(name);
+        setAgeState(age);
+        setProfilePictureState(profilePicture);
+        setDescriptionState(description);
+        setLocationState(location);
+        setYearsOfExperienceState(yearsOfExperience);
+        setLanguagesState(languages);
+        setSkillsState(skills);
+        setSeekingState(seeking);
+        setWebsiteState(website);
+        setGithubState(github);
+        setTwitterState(twitter);
+        setInstagramState(instagram);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    retrieveProfileData();
+  }, []);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.bigIntro}>
@@ -37,22 +79,19 @@ export const Profile = (props) => {
         </div>
         <div className={styles.imageContainer}>
           <img
-            src={profiles[1].image}
-            alt={profiles[1].name}
+            src={profilePictureState}
+            alt={`Image of ${nameState}`}
             className={styles.profileImage}
           />
         </div>
         <div className={styles.nameContainer}>
-          <p className={styles.nameContainer}>Tom Kowski</p>
+          <p className={styles.nameContainer}>{nameState}</p>
         </div>
         <div className={styles.descriptionContainer}>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
+            {descriptionState !== null && descriptionState !== ""
+              ? descriptionState
+              : "N/A"}
           </p>
         </div>
       </div>
@@ -60,32 +99,48 @@ export const Profile = (props) => {
         <div className={styles.topLittleContainer}>
           <div className={`${styles.row}`} style={{ paddingTop: "0px" }}>
             <p>
-              <b>Location:</b> San Fransisco Bay Area
+              <b>Location:</b>{" "}
+              {locationState !== null && locationState !== ""
+                ? locationState
+                : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
             <p>
-              <b>Lanugages:</b> English, Serbian
+              <b>Lanugages:</b>{" "}
+              {languagesState !== null && languagesState !== ""
+                ? languagesState
+                : ""}
             </p>
           </div>
           <div className={styles.row}>
             <p>
-              <b>Age:</b> 26
+              <b>Age:</b>{" "}
+              {ageState !== 0 && ageState !== null ? ageState : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
             <p>
-              <b>Years of Experience:</b> 2
+              <b>Years of Experience:</b>{" "}
+              {yearsOfExperienceState !== null && yearsOfExperienceState !== 0
+                ? yearsOfExperienceState
+                : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
             <p>
-              <b>Skills:</b> {profiles[1].skills.join(", ")}
+              <b>Skills:</b>{" "}
+              {skillsState !== null && skillsState !== []
+                ? skillsState.join(", ")
+                : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
             <p>
-              <b>Seeking:</b> {profiles[1].lookingFor.join(", ")}
+              <b>Seeking:</b>{" "}
+              {seekingState !== null && seekingState !== []
+                ? seekingState.join(", ")
+                : "N/A"}
             </p>
           </div>
         </div>
@@ -99,7 +154,9 @@ export const Profile = (props) => {
             </div>
             <p>
               <a className={styles.personalWebsite} href="www.davidpaccha.io">
-                www.davidpaccha.io
+                {websiteState !== null && websiteState !== ""
+                  ? websiteState
+                  : "N/A"}
               </a>
             </p>
           </div>
@@ -110,7 +167,9 @@ export const Profile = (props) => {
               </div>
               <p className={styles.title}>Github</p>
             </div>
-            <p>@daveydu</p>
+            <p>
+              {githubState !== null && githubState !== "" ? githubState : "N/A"}
+            </p>
           </div>
           <div className={styles.socialRow}>
             <div className={styles.front}>
@@ -121,7 +180,11 @@ export const Profile = (props) => {
               </div>
               <p className={styles.title}>Twitter</p>
             </div>
-            <p>@daviddd</p>
+            <p>
+              {twitterState !== null && twitterState !== ""
+                ? twitterState
+                : "N/A"}
+            </p>
           </div>
           <div className={styles.socialRow}>
             <div className={styles.front}>
@@ -132,7 +195,11 @@ export const Profile = (props) => {
               </div>
               <p className={styles.title}>Instagram</p>
             </div>
-            <p>@davipacc</p>
+            <p>
+              {instagramState !== null && instagramState !== ""
+                ? instagramState
+                : "N/A"}
+            </p>
           </div>
         </div>
       </div>

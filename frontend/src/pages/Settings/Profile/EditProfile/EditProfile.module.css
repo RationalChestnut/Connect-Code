@@ -172,12 +172,12 @@
   font-size: 24px;
 }
 
-input[type="text"] {
+.extraInfoText {
   border: none;
   border-bottom: 1px solid black;
   outline: none;
 }
-input[type="text"]:focus {
+.extraInfoText:focus {
   border-bottom: 1px solid #228bd6;
 }
 
@@ -202,9 +202,14 @@ input[type="text"]:focus {
   .bigIntro {
     padding: 5%;
   }
+  .basicInfoInput {
+    margin-left: 2%;
+  }
+  .descriptionInput {
+    width: 400px;
+  }
 }
-
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
   .profileContainer {
     grid-template-columns: 1fr;
     padding: 5%;
@@ -219,8 +224,41 @@ input[type="text"]:focus {
     padding: 0% 10%;
   }
 }
+
 @media screen and (max-width: 600px) {
   .descriptionContainer {
     padding: 0% 5%;
+  }
+}
+@media screen and (max-width: 575px) {
+  .nameInput {
+    width: 300px;
+  }
+  .descriptionInput {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .nameInput {
+    width: 250px;
+  }
+  .descriptionInput {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .nameInput {
+    width: 200px;
+  }
+  .descriptionInput {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 375px) {
+  .nameInput {
+    width: 150px;
+  }
+  .descriptionInput {
+    width: 250px;
   }
 }

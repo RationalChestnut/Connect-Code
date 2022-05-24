@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./EditProfile.module.css";
 import { profiles } from "../../../../data/ProfileData";
 import { Link } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
+import axios from "axios";
 
 import {
   AiOutlineGlobal,
@@ -12,27 +13,11 @@ import {
   AiFillCamera,
   AiOutlineSave,
 } from "react-icons/ai";
-export const EditProfile = (props) => {
-  const {
-    image,
-    name,
-    description,
-    location,
-    lanugages,
-    age,
-    yearsOfExperience,
-    skills,
-    lookingFor,
-    website,
-    github,
-    twitter,
-    instagram,
-  } = props;
-
+export const EditProfile = () => {
   const [nameState, setNameState] = useState(profiles[1].name);
   const [descriptionState, setDescriptionState] = useState("Sup broski");
   const [locationState, setLocationState] = useState("LA");
-  const [lanugageState, setLanguageState] = useState([]);
+  const [languagesState, setLanguagesState] = useState([]);
   const [ageState, setAgeState] = useState("");
   const [yearsOfExperienceState, setYearsOfExperienceState] = useState("");
   const [skillsState, setSkillsState] = useState([]);
@@ -41,27 +26,98 @@ export const EditProfile = (props) => {
   const [githubState, setGithubState] = useState("");
   const [twitterState, setTwitterState] = useState("");
   const [instagramState, setInstagramState] = useState("");
-  const [imageFileState, setImageFileState] = useState("");
+  const [profilePictureState, setProfilePictureState] = useState("");
+
+  const loadUserProfile = () => {
+    axios
+      .get(
+        `https://ConnectCodeBackend.yxli666.repl.co/user/628bf7cc7d0bbe14b560609a`
+      )
+      .then((response) => {
+        const {
+          name,
+          age,
+          profilePicture,
+          description,
+          location,
+          languages,
+          yearsOfExperience,
+          skills,
+          seeking,
+          website,
+          github,
+          twitter,
+          instagram,
+        } = response.data.user;
+        console.log(name);
+        setNameState(name);
+        setAgeState(age);
+        setProfilePictureState(profilePicture);
+        setDescriptionState(description);
+        setLocationState(location);
+        setYearsOfExperienceState(yearsOfExperience);
+        setLanguagesState(languages);
+        setSkillsState(skills);
+        setSeekingState(seeking);
+        setWebsiteState(website);
+        setGithubState(github);
+        setTwitterState(twitter);
+        setInstagramState(instagram);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const saveData = () => {
+    const userData = {
+      name: nameState,
+      age: ageState,
+      profilePicture: profilePictureState,
+      description: descriptionState,
+      location: locationState,
+      languages: languagesState,
+      yearsOfExperience: yearsOfExperienceState,
+      skills: skillsState,
+      seeking: seekingState,
+      website: websiteState,
+      github: githubState,
+      twitter: twitterState,
+      instagram: instagramState,
+    };
+
+    axios
+      .post("https://ConnectCodeBackend.yxli666.repl.co/user/edit-profile", {
+        userData: userData,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.bigIntro}>
         <div className={styles.saveContainer}>
-          <Link to={"/profile"}>
-            <AiOutlineSave className={styles.saveIcon} />
-          </Link>
+          {/* <Link to={"/profile"}> */}
+          <AiOutlineSave className={styles.saveIcon} onClick={saveData} />
+          {/* </Link> */}
         </div>
 
         <div className={styles.imageContainer}>
           <img
-            src={profiles[1].image}
-            alt={profiles[1].name}
+            src={profilePictureState}
+            alt={nameState}
             className={styles.profileImage}
           />
           <input
             className={styles.fileInput}
             type="file"
-            value={imageFileState}
-            onChange={(e) => setImageFileState(e.target.value)}
+            value={profilePictureState}
+            onChange={(e) => setProfilePictureState(e.target.value)}
           />
           <div className={styles.imageBackground}>
             <AiFillCamera className={styles.imageBackgroundIcon} />
@@ -72,6 +128,7 @@ export const EditProfile = (props) => {
             className={`${styles.textInput} ${styles.nameInput}`}
             type="text"
             value={nameState}
+            maxLength={30}
             onChange={(e) => setNameState(e.target.value)}
           />
         </div>
@@ -94,7 +151,7 @@ export const EditProfile = (props) => {
               <b>Location:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
               type="text"
               value={locationState}
               onChange={(e) => setLocationState(e.target.value)}
@@ -105,10 +162,10 @@ export const EditProfile = (props) => {
               <b>Languages:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
               type="text"
-              value={lanugageState}
-              onChange={(e) => setLanguageState(e.target.value)}
+              value={languagesState}
+              onChange={(e) => setLanguagesState(e.target.value)}
             />
           </div>
           <div className={styles.row}>
@@ -116,8 +173,8 @@ export const EditProfile = (props) => {
               <b>Age:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
-              type="text"
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+              type="number"
               value={ageState}
               onChange={(e) => setAgeState(e.target.value)}
             />
@@ -127,8 +184,8 @@ export const EditProfile = (props) => {
               <b>Years of Experience:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
-              type="text"
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+              type="number"
               value={yearsOfExperienceState}
               onChange={(e) => setYearsOfExperienceState(e.target.value)}
             />
@@ -138,7 +195,7 @@ export const EditProfile = (props) => {
               <b>Skills:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
               type="text"
               value={skillsState}
               onChange={(e) => setSkillsState(e.target.value)}
@@ -149,7 +206,7 @@ export const EditProfile = (props) => {
               <b>Seeking:</b>
             </p>
             <input
-              className={`${styles.textInput} ${styles.basicInfoInput}`}
+              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
               type="text"
               value={seekingState}
               onChange={(e) => setSeekingState(e.target.value)}

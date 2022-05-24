@@ -7,6 +7,8 @@ import { data } from "../../data/HackathonData";
 import { Hackathon } from "../../components/Hackathon/Hackathon";
 const Hackathons = () => {
   const [isFilter, setIsFilter] = useState(false);
+  const [hackathons, setHackathons] = useState([]);
+
   return (
     <div className={styles.hackathonPageContainer}>
       <div className={styles.filterNavbarContainer}>
@@ -21,10 +23,10 @@ const Hackathons = () => {
       </div>
       <div className={styles.hackathonPage}>
         <div className={styles.filterDesktop}>
-          <HackathonFilters />
+          <HackathonFilters setHackathons={setHackathons} />
         </div>
         <div className={styles.hackathonDisplayContainer}>
-          {data.map((hackathon, index) => {
+          {hackathons.map((hackathon, index) => {
             return <Hackathon key={hackathon.title + index} data={hackathon} />;
           })}
         </div>

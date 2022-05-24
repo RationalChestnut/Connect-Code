@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Scale.module.css";
 
-export const Scale = ({ min, max }) => {
+export const Scale = ({ min, max, setMin, setMax, onMouseUp }) => {
   const [valueMinRange, setValueMinRange] = useState(min);
   const [valueMaxRange, setValueMaxRange] = useState(max);
 
@@ -21,9 +21,11 @@ export const Scale = ({ min, max }) => {
           min={min}
           max={max}
           value={valueMinRange}
+          onMouseUp={onMouseUp}
           onChange={(e) => {
             // if (e.target.value < valueMaxRange) {
             setValueMinRange(parseInt(e.target.value));
+            setMin(e.target.value);
             // }
           }}
         />
@@ -33,9 +35,11 @@ export const Scale = ({ min, max }) => {
           min={min}
           max={max}
           value={valueMaxRange}
+          onMouseUp={onMouseUp}
           onChange={(e) => {
             // if (e.target.value > valueMinRange) {
             setValueMaxRange(parseInt(e.target.value));
+            setMax(e.target.value);
             // }
           }}
         />
