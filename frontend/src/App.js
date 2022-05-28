@@ -31,7 +31,7 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/find-others" element={<FindOthers />} />
+        <Route path="/find-others" element={<FindOthers userId={userId} />} />
         <Route path="/hackathons" element={<Hackathons />} />
         <Route path="/profile/:id" element={<Profile userId={userId} />} />
         <Route path="/edit-profile" element={<EditProfile userId={userId} />} />

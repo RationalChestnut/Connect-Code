@@ -21,20 +21,23 @@ export const Signup = (props) => {
 
   const register = async (e) => {
     e.preventDefault();
-    try {
-      // Save user in auth
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        emailState,
-        passwordState
-      );
-      props.setUserId(user.user.uid);
-      createUserAccount(user.user.uid);
-    } catch (e) {
-      console.log(e.message);
-      //Errors include
-      //Invalid register, password or email do not work
-    }
+    // Save user in auth
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      emailState,
+      passwordState
+    )
+      .then((user) => {
+        props.setUserId(user.user.uid);
+        createUserAccount(user.user.uid);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //
+    // console.log(e.message);
+    //Errors include
+    //Invalid register, password or email do not work
   };
 
   const registerGoogleAccount = () => {
@@ -52,6 +55,17 @@ export const Signup = (props) => {
       .post("https://ConnectCodeBackend.yxli666.repl.co/user/create-new-user", {
         userId: id,
         name: name,
+        age: null,
+        description: "",
+        location: "",
+        languages: [],
+        yearsOfExperience: null,
+        skills: [],
+        seeking: [],
+        website: "",
+        github: "",
+        twitter: "",
+        instagram: "",
       })
       .then((res) => {
         console.log("Creating user account worked");
@@ -64,6 +78,17 @@ export const Signup = (props) => {
       .post("https://ConnectCodeBackend.yxli666.repl.co/user/create-new-user", {
         userId: id,
         name: nameState,
+        age: null,
+        description: "",
+        location: "",
+        languages: [],
+        yearsOfExperience: null,
+        skills: [],
+        seeking: [],
+        website: "",
+        github: "",
+        twitter: "",
+        instagram: "",
       })
       .then((res) => {
         console.log("Creating user account worked");

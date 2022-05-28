@@ -21,11 +21,11 @@ export const EditProfile = ({ userId }) => {
   const [nameState, setNameState] = useState("");
   const [descriptionState, setDescriptionState] = useState("");
   const [locationState, setLocationState] = useState("");
-  const [languagesState, setLanguagesState] = useState([]);
+  const [languagesState, setLanguagesState] = useState("");
   const [ageState, setAgeState] = useState("");
   const [yearsOfExperienceState, setYearsOfExperienceState] = useState("");
-  const [skillsState, setSkillsState] = useState([]);
-  const [seekingState, setSeekingState] = useState([]);
+  const [skillsState, setSkillsState] = useState("");
+  const [seekingState, setSeekingState] = useState("");
   const [websiteState, setWebsiteState] = useState("");
   const [githubState, setGithubState] = useState("");
   const [twitterState, setTwitterState] = useState("");
@@ -33,6 +33,7 @@ export const EditProfile = ({ userId }) => {
   const [profilePictureState, setProfilePictureState] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [openCrop, setOpenCrop] = useState(false);
 
   const userImageRef = ref(storage, `images/${userId}`);
   const navigate = useNavigate();
@@ -46,42 +47,36 @@ export const EditProfile = ({ userId }) => {
       return;
     }
     const imageRef = ref(storage, `images/${userId}/${userId}`); //For our sake use user id
-    console.log("Uploading Image");
     uploadBytes(imageRef, profilePictureState)
       .then(() => {
-        console.log("Image done uploading");
         setIsLoading(false);
         navigate(`/profile/${userId}`);
       })
       .catch((e) => {
-        console.log("There was an error");
-        console.log(e);
+        console.log("There was an erro" + e);
         setIsLoading(false);
         navigate(`/profile/${userId}`);
       });
   };
 
   const getImageFile = () => {
-    console.log("Getting Image");
     setIsLoading(true);
     listAll(userImageRef)
       .then((res) => {
         const item = res.items[0];
         getDownloadURL(item).then((url) => {
-          console.log("Setting Image File to State");
           setProfilePicture(url);
         });
         setIsLoading(false);
       })
       .catch((e) => {
-        console.log("Error getting image");
-        console.log(e);
+        console.log("Get image file error" + e);
         setIsLoading(false);
       });
   };
 
   const loadUserProfile = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     axios
       .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${userId}`)
       .then((response) => {
@@ -105,9 +100,9 @@ export const EditProfile = ({ userId }) => {
         setDescriptionState(description);
         setLocationState(location);
         setYearsOfExperienceState(yearsOfExperience);
-        setLanguagesState(languages);
-        setSkillsState(skills);
-        setSeekingState(seeking);
+        setLanguagesState(languages.join(", "));
+        setSkillsState(skills.join(", "));
+        setSeekingState(seeking.join(", "));
         setWebsiteState(website);
         setGithubState(github);
         setTwitterState(twitter);
@@ -116,7 +111,6 @@ export const EditProfile = ({ userId }) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   };
@@ -135,10 +129,10 @@ export const EditProfile = ({ userId }) => {
       profilePicture: profilePictureState,
       description: descriptionState,
       location: locationState,
-      languages: languagesState,
+      languages: languagesState.split(",").map((language) => language.trim()),
       yearsOfExperience: yearsOfExperienceState,
-      skills: skillsState,
-      seeking: seekingState,
+      skills: skillsState.split(",").map((skill) => skill.trim()),
+      seeking: seekingState.split(",").map((seeking) => seeking.trim()),
       website: websiteState,
       github: githubState,
       twitter: twitterState,
@@ -161,7 +155,17 @@ export const EditProfile = ({ userId }) => {
 
   return (
     <div>
-      <ImageCropper />
+      {openCrop ? (
+        <ImageCropper
+          setEndPictureUpload={setProfilePictureState}
+          setProfilePicture={setProfilePicture}
+          openCrop={openCrop}
+          setOpenCrop={setOpenCrop}
+        />
+      ) : (
+        <></>
+      )}
+
       <div className={styles.profileContainer}>
         <Loading isLoading={isLoading} />
         <div className={styles.bigIntro}>
@@ -174,21 +178,14 @@ export const EditProfile = ({ userId }) => {
             </div>
           </div>
 
-          <div className={styles.imageContainer}>
+          <div
+            className={styles.imageContainer}
+            onClick={() => setOpenCrop(true)}
+          >
             <img
               src={profilePicture}
               alt={nameState}
               className={styles.profileImage}
-            />
-            <input
-              className={styles.fileInput}
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              onChange={(event) => {
-                //Set picture state for upload
-                setProfilePictureState(event.target.files[0]);
-                setProfilePicture(URL.createObjectURL(event.target.files[0]));
-              }}
             />
             <div className={styles.imageBackground}>
               <AiFillCamera className={styles.imageBackgroundIcon} />

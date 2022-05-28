@@ -11,11 +11,6 @@
   justify-content: center;
 }
 
-.imageCropperHolder {
-  width: 70%;
-  background-color: white;
-}
-
 .cropperButtons {
   text-align: center;
 }
@@ -28,4 +23,56 @@
 
 .fileSelector {
   display: none;
+}
+
+.imageCropper {
+  width: 50%;
+  height: 50%;
+  background-color: black;
+  position: absolute;
+  bottom: 40%;
+}
+
+.nonCropImage {
+  position: absolute;
+  width: 50%;
+  bottom: 28%;
+  background-color: white;
+  padding: 1%;
+}
+
+.imageCropperSelectorsContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.range {
+  width: 80%;
+  margin-bottom: 1%;
+}
+
+@media screen and (max-width: 1500px) {
+  .imageCropper {
+    width: 55%;
+  }
+  .nonCropImage {
+    width: 55%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .imageCropper {
+    width: 70%;
+  }
+  .nonCropImage {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .imageCropper {
+    height: 40%;
+  }
 }

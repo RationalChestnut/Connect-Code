@@ -3,12 +3,19 @@ import { Skill } from "../../components/Filters/Skill/Skill";
 import { Scale } from "../../components/Filters/Scale/Scale";
 import styles from "./Filter.module.css";
 
-export const Filter = (props) => {
+export const Filter = ({
+  skills,
+  setSkills,
+  setMinAge,
+  setMaxAge,
+  setMinExperience,
+  setMaxExperience,
+  query,
+}) => {
   const [skill, setSkill] = useState("");
-  const [totalSkills, setTotalSkills] = useState([]);
   const addSkill = () => {
     if (skill !== "" && skill !== null) {
-      setTotalSkills((totalSkills) => [...totalSkills, skill]);
+      setSkills((skills) => [...skills, skill]);
     }
     setSkill("");
   };
@@ -34,13 +41,13 @@ export const Filter = (props) => {
           </button>
         </div>
         <div className={styles.skills}>
-          {totalSkills.map((skill, index) => {
+          {skills.map((skill, index) => {
             return (
               <Skill
                 key={skill + index}
                 skill={skill}
-                totalSkills={totalSkills}
-                setTotalSkills={setTotalSkills}
+                skills={skills}
+                setSkills={setSkills}
               />
             );
           })}
@@ -48,11 +55,23 @@ export const Filter = (props) => {
       </div>
       <div className={styles.ageContainer}>
         <h1>Age Range</h1>
-        <Scale min={18} max={100} />
+        <Scale
+          min={18}
+          max={100}
+          setMin={setMinAge}
+          setMax={setMaxAge}
+          onMouseUp={query}
+        />
       </div>
       <div className={styles.experienceContainer}>
         <h1>Years of Experience</h1>
-        <Scale min={0} max={20} />
+        <Scale
+          min={0}
+          max={20}
+          setMin={setMinExperience}
+          setMax={setMaxExperience}
+          onMouseUp={query}
+        />
       </div>
     </div>
   );

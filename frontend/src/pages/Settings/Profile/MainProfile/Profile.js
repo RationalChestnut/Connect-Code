@@ -130,9 +130,9 @@ export const Profile = ({ userId }) => {
           <div className={styles.row}>
             <p>
               <b>Lanugages:</b>{" "}
-              {languagesState !== null && languagesState !== ""
-                ? languagesState
-                : ""}
+              {languagesState !== null && languagesState.length > 0
+                ? languagesState.join(", ")
+                : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
@@ -152,17 +152,17 @@ export const Profile = ({ userId }) => {
           <div className={styles.row}>
             <p>
               <b>Skills:</b>{" "}
-              {/* {skillsState !== null && skillsState !== []
+              {skillsState && skillsState.length > 0
                 ? skillsState.join(", ")
-                : "N/A"} */}
+                : "N/A"}
             </p>
           </div>
           <div className={styles.row}>
             <p>
               <b>Seeking:</b>{" "}
-              {/* {seekingState !== null && seekingState !== []
+              {seekingState && seekingState.length > 0
                 ? seekingState.join(", ")
-                : "N/A"} */}
+                : "N/A"}
             </p>
           </div>
         </div>

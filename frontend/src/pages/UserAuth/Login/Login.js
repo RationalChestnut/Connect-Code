@@ -8,6 +8,7 @@ import { auth } from "../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { GoogleComponent } from "../../../components/Google Component/GoogleComponent";
 import { signInWithGoogle } from "../../../firebase-config";
+import axios from "axios";
 
 export const Login = (props) => {
   const [emailState, setEmailState] = useState("");
@@ -34,6 +35,30 @@ export const Login = (props) => {
         // Store User Data
         console.log(user);
         props.setUserId(user.user.uid);
+        createUserAccountWithGoogle(user.user.uid, user.user.displayName);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const createUserAccountWithGoogle = (id, name) => {
+    axios
+      .post("https://ConnectCodeBackend.yxli666.repl.co/user/create-new-user", {
+        userId: id,
+        name: name,
+        age: null,
+        description: "",
+        location: "",
+        languages: [],
+        yearsOfExperience: null,
+        skills: [],
+        seeking: [],
+        website: "",
+        github: "",
+        twitter: "",
+        instagram: "",
+      })
+      .then((res) => {
+        console.log("Creating user account worked");
       })
       .catch((e) => console.log(e));
   };

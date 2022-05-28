@@ -56,7 +56,6 @@ const Hackathons = () => {
   };
 
   useEffect(() => {
-    console.log("ran");
     query();
   }, [themes, inPerson, online]);
 
