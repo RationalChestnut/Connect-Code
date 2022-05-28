@@ -1,46 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import styles from "./Login.module.css";
 import NavLogo from "../../../components/navbar/NavLogo.js";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
+import { auth } from "../../../firebase-config";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleComponent } from "../../../components/Google Component/GoogleComponent";
+import { signInWithGoogle } from "../../../firebase-config";
 
 export const Login = (props) => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
 
-  const handleUserLogin = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    if (
-      emailState !== null &&
-      emailState !== "" &&
-      passwordState !== null &&
-      passwordState !== ""
-    ) {
-      axios
-        .post("https://ConnectCodeBackend.yxli666.repl.co/login", {
-          email: emailState,
-          password: passwordState,
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            props.setUser(response.data.user);
-            console.log(response.data.user);
-          } else if (response.status === 401) {
-            console.log(response.data.error);
-          } else {
-            console.log("An unexpected error occured, please try again later");
-          }
-        })
-        .catch((error) => {
-          console.log("There is an error");
-          console.log(error);
-        });
-    } else {
-      console.log("Something happened");
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        emailState,
+        passwordState
+      );
+      props.setUserId(user.user.uid);
+      console.log(user);
+    } catch (e) {
+      console.log(e);
     }
   };
+
+  const googleLogin = () => {
+    signInWithGoogle()
+      .then((user) => {
+        // Store User Data
+        console.log(user);
+        props.setUserId(user.user.uid);
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.puzzlePieces}>
@@ -60,7 +57,7 @@ export const Login = (props) => {
         <span className={styles.red}> Connect</span>
         <span className={styles.yellow}>Code</span>
       </h1>
-      <form className={styles.formContainer} onSubmit={handleUserLogin}>
+      <form className={styles.formContainer} onSubmit={login}>
         <div className={styles.formInputGroup}>
           <label htmlFor="email" className={styles.formLabel}>
             Email
@@ -90,6 +87,10 @@ export const Login = (props) => {
         <button type="submit" className={styles.loginButton}>
           Login
         </button>
+        <div onClick={googleLogin}>
+          <GoogleComponent text="Login With Google" />
+        </div>
+
         <small className={styles.tipText}>
           Don't have an account?{" "}
           <Link to={"/signup"} className={styles.linkToOtherPage}>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import styles from "./Signup.module.css";
 import NavLogo from "../../../components/navbar/NavLogo.js";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
@@ -8,55 +7,69 @@ import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router";
+import { auth } from "../../../firebase-config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleComponent } from "../../../components/Google Component/GoogleComponent";
+import { signInWithGoogle } from "../../../firebase-config";
+import axios from "axios";
 
 export const Signup = (props) => {
   const [nameState, setNameState] = useState("");
-  const [ageState, setAgeState] = useState();
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
-  const navigate = useNavigate();
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
-
-    if (
-      nameState !== null &&
-      nameState !== "" &&
-      ageState !== null &&
-      ageState !== 0 &&
-      emailState !== null &&
-      emailState !== "" &&
-      passwordState !== null &&
-      passwordState !== "" &&
-      confirmPasswordState === passwordState
-    ) {
-      axios
-        .post("https://ConnectCodeBackend.yxli666.repl.co/register", {
-          name: nameState,
-          age: ageState,
-          password: passwordState,
-          email: emailState,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            props.setUser(res.data.user);
-            navigate("/profile");
-          } else if (res.status === 401) {
-            console.log("User already exists");
-          } else {
-            console.log("Error has occured");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } else {
-      console.log("Error");
+    try {
+      // Save user in auth
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        emailState,
+        passwordState
+      );
+      props.setUserId(user.user.uid);
+      createUserAccount(user.user.uid);
+    } catch (e) {
+      console.log(e.message);
+      //Errors include
+      //Invalid register, password or email do not work
     }
   };
 
-  // Handle errors
+  const registerGoogleAccount = () => {
+    signInWithGoogle()
+      .then((user) => {
+        // Store User Data
+        props.setUserId(user.user.uid);
+        createUserAccountWithGoogle(user.user.uid, user.user.displayName);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const createUserAccountWithGoogle = (id, name) => {
+    axios
+      .post("https://ConnectCodeBackend.yxli666.repl.co/user/create-new-user", {
+        userId: id,
+        name: name,
+      })
+      .then((res) => {
+        console.log("Creating user account worked");
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const createUserAccount = (id) => {
+    axios
+      .post("https://ConnectCodeBackend.yxli666.repl.co/user/create-new-user", {
+        userId: id,
+        name: nameState,
+      })
+      .then((res) => {
+        console.log("Creating user account worked");
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div className={styles.loginContainer}>
@@ -88,35 +101,6 @@ export const Signup = (props) => {
             name="name"
             value={nameState}
             onChange={(e) => setNameState(e.target.value)}
-            className={styles.formInput}
-            required={true}
-          />
-        </div>
-        <div
-          className={`${styles.formInputGroup} ${styles.questionQuestionContainer}`}
-        >
-          <label
-            htmlFor="age"
-            className={`${styles.formLabel} ${styles.questionContainer}`}
-          >
-            Age
-            <div className={styles.questionAge}>
-              <AiOutlineQuestionCircle size={"15px"} />
-            </div>
-            <div className={styles.questionExplanation}>
-              <p>
-                Your age will determine which partners we recommend to you so
-                please stay honest!
-              </p>
-            </div>
-          </label>
-          <input
-            type="number"
-            name="age"
-            min={4}
-            max={110}
-            value={ageState}
-            onChange={(e) => setAgeState(e.target.value)}
             className={styles.formInput}
             required={true}
           />
@@ -166,6 +150,12 @@ export const Signup = (props) => {
         <button type="submit" className={styles.loginButton}>
           Signup
         </button>
+        <div className={styles.row}>
+          <div onClick={registerGoogleAccount}>
+            <GoogleComponent text="Sign Up With Google" />
+          </div>
+        </div>
+
         <small className={styles.tipText}>
           Already have an account?{" "}
           <Link to={"/login"} className={styles.linkToOtherPage}>

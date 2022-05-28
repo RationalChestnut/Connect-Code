@@ -96,6 +96,25 @@
   display: none;
 }
 
+.desktopSettingsContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.settingsMobileContainer {
+  width: 100%;
+}
+
+.navButtons {
+  display: flex;
+}
+
+.userAuthContainer {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (max-width: 1300px) {
   .navLinks {
     width: 90%;
@@ -150,7 +169,8 @@
     flex-direction: column;
     height: 100%;
     position: absolute;
-    top: 5%;
+    z-index: 10;
+    top: 6%;
     left: 0;
     right: 0;
     list-style: none;
@@ -173,6 +193,9 @@
     border-bottom: 1px solid rgb(229, 229, 229);
     animation: slide-up 0.4s ease;
     background-color: white;
+  }
+  .desktopGears {
+    display: none;
   }
 }
 @keyframes slide-up {

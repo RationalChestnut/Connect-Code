@@ -3,46 +3,25 @@ import axios from "axios";
 import styles from "./HackathonFilters.module.css";
 import { Skill } from "../../components/Filters/Skill/Skill";
 import { Scale } from "../../components/Filters/Scale/Scale";
-export const HackathonFilters = ({ setHackathons }) => {
+export const HackathonFilters = ({
+  setMinPrize,
+  setMaxPrize,
+  setThemes,
+  setInPerson,
+  setOnline,
+  themes,
+  online,
+  inPerson,
+  query,
+}) => {
   const [theme, setTheme] = useState("");
-  const [themes, setThemes] = useState([]);
-  const [minPrize, setMinPrize] = useState(0);
-  const [maxPrize, setMaxPrize] = useState(100000);
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
-  const [inPerson, setInPerson] = useState(false);
-  const [online, setOnline] = useState(false);
 
   const addTheme = () => {
     if (theme !== "" && theme !== null) {
       setThemes((themes) => [...themes, theme]);
-
-      setTimeout(() => {
-        query();
-      }, 500);
     }
     setTheme("");
   };
-
-  const query = () => {
-    const queryLink = `https://ConnectCodeBackend.yxli666.repl.co/hackathons/query?minPrize=${Math.min(
-      minPrize,
-      maxPrize
-    )}&maxPrize=${Math.max(
-      minPrize,
-      maxPrize
-    )}&inPerson=${inPerson}&online=${online}&startDateString=${fromDate}&endDateString=${toDate}&tags=${themes.join(
-      ","
-    )}`;
-
-    axios.get(queryLink).then((res) => {
-      setHackathons(res.data.hackathons);
-    });
-  };
-
-  useEffect(() => {
-    query();
-  }, []);
 
   return (
     <div className={styles.hackathonFiltersContainer}>
@@ -100,7 +79,6 @@ export const HackathonFilters = ({ setHackathons }) => {
             checked={inPerson}
             onChange={(e) => {
               setInPerson(e.target.checked);
-              query();
             }}
           />
           <p className={styles.choice}>In Person</p>
@@ -111,13 +89,12 @@ export const HackathonFilters = ({ setHackathons }) => {
             checked={online}
             onChange={(e) => {
               setOnline(e.target.checked);
-              query();
             }}
           />
           <p className={styles.choice}>Online</p>
         </div>
       </div>
-      <div className={styles.dateContainer}>
+      {/* <div className={styles.dateContainer}>
         <h1>Date</h1>
         <div className={styles.row}>
           <p>From</p>
@@ -126,7 +103,6 @@ export const HackathonFilters = ({ setHackathons }) => {
             value={fromDate}
             onChange={(e) => {
               setFromDate(e.target.value);
-              query();
             }}
             className={styles.dateInput}
           />
@@ -139,11 +115,10 @@ export const HackathonFilters = ({ setHackathons }) => {
             value={toDate}
             onChange={(e) => {
               setToDate(e.target.value);
-              query();
             }}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

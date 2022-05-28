@@ -1,0 +1,13 @@
+.gearContainer {
+  transition: ease-in 0.15s;
+}
+
+.gearContainer:hover {
+  cursor: pointer;
+  color: #228bd6;
+}
+
+.gearIcon {
+  width: 20px;
+  height: 20px;
+}

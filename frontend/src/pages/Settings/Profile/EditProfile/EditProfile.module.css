@@ -46,6 +46,17 @@
 .saveIcon {
   font-size: 36px;
   color: #1f7fc4;
+  margin-left: 30px;
+}
+
+.iconsContainer {
+  display: flex;
+  align-items: center;
+}
+
+.cancelIcon {
+  font-size: 32px;
+  color: #1f7fc4;
 }
 
 .imageContainer {
@@ -88,8 +99,10 @@
 
 .profileImage {
   border-radius: 100%;
-  object-fit: none;
-  object-position: center;
+  /* object-fit: none; */
+  /* object-position: center; */
+  width: 300px;
+  height: 300px;
 }
 
 .imageBackgroundIcon {
@@ -198,6 +211,18 @@
   border: 1px solid #228bd6;
 }
 
+@media screen and (max-width: 1300px) {
+  .saveIcon {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+
+  .iconsContainer {
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+  }
+}
 @media screen and (max-width: 1200px) {
   .bigIntro {
     padding: 5%;

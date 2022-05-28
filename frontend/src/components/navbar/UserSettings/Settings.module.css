@@ -1,0 +1,52 @@
+.settingsContainer {
+  position: relative;
+  z-index: 10;
+}
+
+.displayNone {
+  display: none;
+}
+
+.display {
+  display: block;
+}
+
+.settings {
+  position: absolute;
+  width: 75px;
+  height: 150px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: white;
+  margin-left: -25px;
+  border-radius: 10px;
+  border: 1px solid #228bd6;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (max-width: 800px) {
+  .settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    position: static;
+    margin: 0px;
+    width: 100%;
+    border: none;
+    height: 75px;
+    border-bottom: 1px solid rgb(229, 229, 229);
+    border-radius: 0px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .settings {
+    height: 50px;
+  }
+}

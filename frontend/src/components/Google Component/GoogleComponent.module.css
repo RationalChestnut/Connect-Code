@@ -1,0 +1,23 @@
+.googleComponent {
+  width: 100%;
+  padding: 20px;
+  background-color: rgb(254, 254, 254);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleComponent:hover {
+  cursor: pointer;
+}
+
+.googleLogo {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.text {
+  font-size: 15px;
+}

@@ -79,6 +79,10 @@
   color: #ffe51f;
 }
 
+.linkToOtherPage {
+  color: black;
+}
+
 @media screen and (max-width: 1500px) {
   .puzzlePiece {
     width: 10%;
@@ -138,9 +142,6 @@
   }
   .tipText {
     padding-bottom: 2%;
-  }
-  .linkToOtherPage {
-    color: black;
   }
 }
 @media screen and (max-width: 400px) {

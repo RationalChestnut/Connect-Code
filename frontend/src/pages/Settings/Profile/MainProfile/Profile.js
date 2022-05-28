@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { FiEdit } from "react-icons/fi";
-import { profiles } from "../../../../data/ProfileData";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-
 import {
   AiOutlineGlobal,
   AiFillGithub,
   AiOutlineTwitter,
   AiOutlineInstagram,
-  AiFillCamera,
 } from "react-icons/ai";
-export const Profile = () => {
-  const { id } = useParams();
+import { storage } from "../../../../firebase-config";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import Loading from "../../../../components/Loading/Loading";
+
+export const Profile = ({ userId }) => {
   const [nameState, setNameState] = useState("");
   const [ageState, setAgeState] = useState(0);
   const [profilePictureState, setProfilePictureState] = useState("");
@@ -27,15 +27,19 @@ export const Profile = () => {
   const [githubState, setGithubState] = useState("");
   const [twitterState, setTwitterState] = useState("");
   const [instagramState, setInstagramState] = useState("");
+  const { id } = useParams();
+  const userImageRef = ref(storage, `images/${userId}`);
+  const [isLoading, setIsLoading] = useState(false);
 
   const retrieveProfileData = () => {
+    getImageFile();
+
     axios
       .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${id}`)
       .then((response) => {
         const {
           name,
           age,
-          profilePicture,
           description,
           location,
           languages,
@@ -46,11 +50,9 @@ export const Profile = () => {
           github,
           twitter,
           instagram,
-        } = response.data.user;
-        console.log(name);
+        } = response.data;
         setNameState(name);
         setAgeState(age);
-        setProfilePictureState(profilePicture);
         setDescriptionState(description);
         setLocationState(location);
         setYearsOfExperienceState(yearsOfExperience);
@@ -65,12 +67,32 @@ export const Profile = () => {
       .catch((err) => console.log(err));
   };
 
+  const getImageFile = () => {
+    console.log("Getting Image");
+    setIsLoading(true);
+    listAll(userImageRef)
+      .then((res) => {
+        const item = res.items[0];
+        getDownloadURL(item).then((url) => {
+          console.log("Setting Image File to State");
+          setProfilePictureState(url);
+        });
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log("Error getting image");
+        console.log(e);
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
     retrieveProfileData();
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.profileContainer}>
+      <Loading isLoading={isLoading} />
       <div className={styles.bigIntro}>
         <div className={styles.editContainer}>
           <Link to={"/edit-profile"}>
@@ -80,7 +102,7 @@ export const Profile = () => {
         <div className={styles.imageContainer}>
           <img
             src={profilePictureState}
-            alt={`Image of ${nameState}`}
+            alt={nameState}
             className={styles.profileImage}
           />
         </div>
@@ -130,17 +152,17 @@ export const Profile = () => {
           <div className={styles.row}>
             <p>
               <b>Skills:</b>{" "}
-              {skillsState !== null && skillsState !== []
+              {/* {skillsState !== null && skillsState !== []
                 ? skillsState.join(", ")
-                : "N/A"}
+                : "N/A"} */}
             </p>
           </div>
           <div className={styles.row}>
             <p>
               <b>Seeking:</b>{" "}
-              {seekingState !== null && seekingState !== []
+              {/* {seekingState !== null && seekingState !== []
                 ? seekingState.join(", ")
-                : "N/A"}
+                : "N/A"} */}
             </p>
           </div>
         </div>
@@ -153,7 +175,11 @@ export const Profile = () => {
               <p className={styles.title}>Website</p>
             </div>
             <p>
-              <a className={styles.personalWebsite} href="www.davidpaccha.io">
+              <a
+                className={styles.personalWebsite}
+                target="_blank"
+                href="www.davidpaccha.io"
+              >
                 {websiteState !== null && websiteState !== ""
                   ? websiteState
                   : "N/A"}

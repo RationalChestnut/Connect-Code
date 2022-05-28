@@ -4,6 +4,7 @@ import styles from "./Profile.module.css";
 const Profile = (props) => {
   const { image, name, languages, skills, yearsOfExperience, lookingFor } =
     props;
+
   return (
     <div className={styles.profileContainer} style={props.style}>
       <div style={props.style}>

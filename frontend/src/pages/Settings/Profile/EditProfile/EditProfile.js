@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styles from "./EditProfile.module.css";
-import { profiles } from "../../../../data/ProfileData";
+import Loading from "../../../../components/Loading/Loading";
 import { Link } from "react-router-dom";
-import { FiEdit } from "react-icons/fi";
 import axios from "axios";
+import { storage } from "../../../../firebase-config";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ImCancelCircle } from "react-icons/im";
+import { useNavigate } from "react-router";
+import { ImageCropper } from "./ImageCropper/ImageCropper";
 
 import {
   AiOutlineGlobal,
@@ -13,10 +17,10 @@ import {
   AiFillCamera,
   AiOutlineSave,
 } from "react-icons/ai";
-export const EditProfile = () => {
-  const [nameState, setNameState] = useState(profiles[1].name);
-  const [descriptionState, setDescriptionState] = useState("Sup broski");
-  const [locationState, setLocationState] = useState("LA");
+export const EditProfile = ({ userId }) => {
+  const [nameState, setNameState] = useState("");
+  const [descriptionState, setDescriptionState] = useState("");
+  const [locationState, setLocationState] = useState("");
   const [languagesState, setLanguagesState] = useState([]);
   const [ageState, setAgeState] = useState("");
   const [yearsOfExperienceState, setYearsOfExperienceState] = useState("");
@@ -27,17 +31,63 @@ export const EditProfile = () => {
   const [twitterState, setTwitterState] = useState("");
   const [instagramState, setInstagramState] = useState("");
   const [profilePictureState, setProfilePictureState] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userImageRef = ref(storage, `images/${userId}`);
+  const navigate = useNavigate();
+
+  const uploadImageFile = () => {
+    setIsLoading(true);
+    if (profilePictureState == null || profilePictureState === "") {
+      setIsLoading(false);
+
+      navigate(`/profile/${userId}`);
+      return;
+    }
+    const imageRef = ref(storage, `images/${userId}/${userId}`); //For our sake use user id
+    console.log("Uploading Image");
+    uploadBytes(imageRef, profilePictureState)
+      .then(() => {
+        console.log("Image done uploading");
+        setIsLoading(false);
+        navigate(`/profile/${userId}`);
+      })
+      .catch((e) => {
+        console.log("There was an error");
+        console.log(e);
+        setIsLoading(false);
+        navigate(`/profile/${userId}`);
+      });
+  };
+
+  const getImageFile = () => {
+    console.log("Getting Image");
+    setIsLoading(true);
+    listAll(userImageRef)
+      .then((res) => {
+        const item = res.items[0];
+        getDownloadURL(item).then((url) => {
+          console.log("Setting Image File to State");
+          setProfilePicture(url);
+        });
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log("Error getting image");
+        console.log(e);
+        setIsLoading(false);
+      });
+  };
 
   const loadUserProfile = () => {
+    setIsLoading(true);
     axios
-      .get(
-        `https://ConnectCodeBackend.yxli666.repl.co/user/628bf7cc7d0bbe14b560609a`
-      )
+      .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${userId}`)
       .then((response) => {
         const {
           name,
           age,
-          profilePicture,
           description,
           location,
           languages,
@@ -48,11 +98,10 @@ export const EditProfile = () => {
           github,
           twitter,
           instagram,
-        } = response.data.user;
-        console.log(name);
+        } = response.data;
+        getImageFile();
         setNameState(name);
         setAgeState(age);
-        setProfilePictureState(profilePicture);
         setDescriptionState(description);
         setLocationState(location);
         setYearsOfExperienceState(yearsOfExperience);
@@ -63,16 +112,24 @@ export const EditProfile = () => {
         setGithubState(github);
         setTwitterState(twitter);
         setInstagramState(instagram);
+
+        setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
     loadUserProfile();
-  }, []);
+  }, [userId]);
 
   const saveData = () => {
+    setIsLoading(true);
+
     const userData = {
+      userId: userId,
       name: nameState,
       age: ageState,
       profilePicture: profilePictureState,
@@ -87,192 +144,207 @@ export const EditProfile = () => {
       twitter: twitterState,
       instagram: instagramState,
     };
-
     axios
-      .post("https://ConnectCodeBackend.yxli666.repl.co/user/edit-profile", {
-        userData: userData,
+      .post(
+        "https://ConnectCodeBackend.yxli666.repl.co/user/edit-profile",
+        userData
+      )
+      .then((res) => {
+        setIsLoading(false);
+        uploadImageFile();
       })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setIsLoading(false);
+      });
   };
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.bigIntro}>
-        <div className={styles.saveContainer}>
-          {/* <Link to={"/profile"}> */}
-          <AiOutlineSave className={styles.saveIcon} onClick={saveData} />
-          {/* </Link> */}
-        </div>
+    <div>
+      <ImageCropper />
+      <div className={styles.profileContainer}>
+        <Loading isLoading={isLoading} />
+        <div className={styles.bigIntro}>
+          <div className={styles.saveContainer}>
+            <div className={styles.iconsContainer}>
+              <Link to={`/profile/${userId}`}>
+                <ImCancelCircle className={styles.cancelIcon} />
+              </Link>
+              <AiOutlineSave className={styles.saveIcon} onClick={saveData} />
+            </div>
+          </div>
 
-        <div className={styles.imageContainer}>
-          <img
-            src={profilePictureState}
-            alt={nameState}
-            className={styles.profileImage}
-          />
-          <input
-            className={styles.fileInput}
-            type="file"
-            value={profilePictureState}
-            onChange={(e) => setProfilePictureState(e.target.value)}
-          />
-          <div className={styles.imageBackground}>
-            <AiFillCamera className={styles.imageBackgroundIcon} />
+          <div className={styles.imageContainer}>
+            <img
+              src={profilePicture}
+              alt={nameState}
+              className={styles.profileImage}
+            />
+            <input
+              className={styles.fileInput}
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              onChange={(event) => {
+                //Set picture state for upload
+                setProfilePictureState(event.target.files[0]);
+                setProfilePicture(URL.createObjectURL(event.target.files[0]));
+              }}
+            />
+            <div className={styles.imageBackground}>
+              <AiFillCamera className={styles.imageBackgroundIcon} />
+            </div>
+          </div>
+          <div className={styles.nameContainer}>
+            <input
+              className={`${styles.textInput} ${styles.nameInput}`}
+              type="text"
+              value={nameState}
+              maxLength={30}
+              onChange={(e) => setNameState(e.target.value)}
+            />
+          </div>
+          <div className={styles.descriptionContainer}>
+            <textarea
+              name="Description"
+              rows="4"
+              cols="55"
+              maxLength={300}
+              value={descriptionState}
+              onChange={(e) => setDescriptionState(e.target.value)}
+              className={styles.descriptionInput}
+            ></textarea>
           </div>
         </div>
-        <div className={styles.nameContainer}>
-          <input
-            className={`${styles.textInput} ${styles.nameInput}`}
-            type="text"
-            value={nameState}
-            maxLength={30}
-            onChange={(e) => setNameState(e.target.value)}
-          />
-        </div>
-        <div className={styles.descriptionContainer}>
-          <textarea
-            name="Description"
-            rows="4"
-            cols="55"
-            maxLength={300}
-            value={descriptionState}
-            onChange={(e) => setDescriptionState(e.target.value)}
-            className={styles.descriptionInput}
-          ></textarea>
-        </div>
-      </div>
-      <div className={styles.littleIntroContainer}>
-        <div className={styles.topLittleContainer}>
-          <div className={`${styles.row}`} style={{ paddingTop: "0px" }}>
-            <p className={styles.pLocation}>
-              <b>Location:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="text"
-              value={locationState}
-              onChange={(e) => setLocationState(e.target.value)}
-            />
-          </div>
-          <div className={styles.row}>
-            <p className={styles.pLocation}>
-              <b>Languages:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="text"
-              value={languagesState}
-              onChange={(e) => setLanguagesState(e.target.value)}
-            />
-          </div>
-          <div className={styles.row}>
-            <p className={styles.pLocation}>
-              <b>Age:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="number"
-              value={ageState}
-              onChange={(e) => setAgeState(e.target.value)}
-            />
-          </div>
-          <div className={styles.row}>
-            <p className={styles.pLocation}>
-              <b>Years of Experience:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="number"
-              value={yearsOfExperienceState}
-              onChange={(e) => setYearsOfExperienceState(e.target.value)}
-            />
-          </div>
-          <div className={styles.row}>
-            <p className={styles.pLocation}>
-              <b>Skills:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="text"
-              value={skillsState}
-              onChange={(e) => setSkillsState(e.target.value)}
-            />
-          </div>
-          <div className={styles.row}>
-            <p className={styles.pLocation}>
-              <b>Seeking:</b>
-            </p>
-            <input
-              className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
-              type="text"
-              value={seekingState}
-              onChange={(e) => setSeekingState(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles.bottomLittleContainer}>
-          <div className={styles.socialRow}>
-            <div className={styles.front}>
-              <div className={styles.iconContainer}>
-                <AiOutlineGlobal className={styles.socialIcon} />
-              </div>
-              <p className={styles.title}>Website</p>
+        <div className={styles.littleIntroContainer}>
+          <div className={styles.topLittleContainer}>
+            <div className={`${styles.row}`} style={{ paddingTop: "0px" }}>
+              <p className={styles.pLocation}>
+                <b>Location:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="text"
+                value={locationState}
+                onChange={(e) => setLocationState(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              className={styles.extraInfoText}
-              value={websiteState}
-              onChange={(e) => setWebsiteState(e.target.value)}
-            />
-          </div>
-          <div className={styles.socialRow}>
-            <div className={styles.front}>
-              <div className={styles.iconContainer}>
-                <AiFillGithub className={styles.socialIcon} />
-              </div>
-              <p className={styles.title}>Github</p>
+            <div className={styles.row}>
+              <p className={styles.pLocation}>
+                <b>Languages:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="text"
+                value={languagesState}
+                onChange={(e) => setLanguagesState(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              className={styles.extraInfoText}
-              value={githubState}
-              onChange={(e) => setGithubState(e.target.value)}
-            />
-          </div>
-          <div className={styles.socialRow}>
-            <div className={styles.front}>
-              <div className={styles.iconContainer}>
-                <AiOutlineTwitter
-                  className={`${styles.socialIcon} ${styles.twitter}`}
-                />
-              </div>
-              <p className={styles.title}>Twitter</p>
+            <div className={styles.row}>
+              <p className={styles.pLocation}>
+                <b>Age:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="number"
+                value={ageState}
+                onChange={(e) => setAgeState(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              className={styles.extraInfoText}
-              value={twitterState}
-              onChange={(e) => setTwitterState(e.target.value)}
-            />
-          </div>
-          <div className={styles.socialRow}>
-            <div className={styles.front}>
-              <div className={styles.iconContainer}>
-                <AiOutlineInstagram
-                  className={`${styles.socialIcon} ${styles.insta}`}
-                />
-              </div>
-              <p className={styles.title}>Instagram</p>
+            <div className={styles.row}>
+              <p className={styles.pLocation}>
+                <b>Years of Experience:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="number"
+                value={yearsOfExperienceState}
+                onChange={(e) => setYearsOfExperienceState(e.target.value)}
+              />
             </div>
-            <input
-              type="text"
-              className={styles.extraInfoText}
-              value={instagramState}
-              onChange={(e) => setInstagramState(e.target.value)}
-            />
+            <div className={styles.row}>
+              <p className={styles.pLocation}>
+                <b>Skills:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="text"
+                value={skillsState}
+                onChange={(e) => setSkillsState(e.target.value)}
+              />
+            </div>
+            <div className={styles.row}>
+              <p className={styles.pLocation}>
+                <b>Seeking:</b>
+              </p>
+              <input
+                className={`${styles.extraInfoText} ${styles.basicInfoInput}`}
+                type="text"
+                value={seekingState}
+                onChange={(e) => setSeekingState(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className={styles.bottomLittleContainer}>
+            <div className={styles.socialRow}>
+              <div className={styles.front}>
+                <div className={styles.iconContainer}>
+                  <AiOutlineGlobal className={styles.socialIcon} />
+                </div>
+                <p className={styles.title}>Website</p>
+              </div>
+              <input
+                type="text"
+                className={styles.extraInfoText}
+                value={websiteState}
+                onChange={(e) => setWebsiteState(e.target.value)}
+              />
+            </div>
+            <div className={styles.socialRow}>
+              <div className={styles.front}>
+                <div className={styles.iconContainer}>
+                  <AiFillGithub className={styles.socialIcon} />
+                </div>
+                <p className={styles.title}>Github</p>
+              </div>
+              <input
+                type="text"
+                className={styles.extraInfoText}
+                value={githubState}
+                onChange={(e) => setGithubState(e.target.value)}
+              />
+            </div>
+            <div className={styles.socialRow}>
+              <div className={styles.front}>
+                <div className={styles.iconContainer}>
+                  <AiOutlineTwitter
+                    className={`${styles.socialIcon} ${styles.twitter}`}
+                  />
+                </div>
+                <p className={styles.title}>Twitter</p>
+              </div>
+              <input
+                type="text"
+                className={styles.extraInfoText}
+                value={twitterState}
+                onChange={(e) => setTwitterState(e.target.value)}
+              />
+            </div>
+            <div className={styles.socialRow}>
+              <div className={styles.front}>
+                <div className={styles.iconContainer}>
+                  <AiOutlineInstagram
+                    className={`${styles.socialIcon} ${styles.insta}`}
+                  />
+                </div>
+                <p className={styles.title}>Instagram</p>
+              </div>
+              <input
+                type="text"
+                className={styles.extraInfoText}
+                value={instagramState}
+                onChange={(e) => setInstagramState(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>
