@@ -55,6 +55,10 @@
   cursor: pointer;
 }
 
+.endText {
+  text-align: center;
+}
+
 @media screen and (max-width: 1500px) {
   .hackathonPage {
     grid-template-columns: 4fr 12fr;

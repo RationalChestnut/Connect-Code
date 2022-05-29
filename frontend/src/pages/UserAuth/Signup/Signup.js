@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
-import NavLogo from "../../../components/navbar/NavLogo.js";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { BsCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router";
 import { auth } from "../../../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -18,6 +15,7 @@ export const Signup = (props) => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  const navigate = useNavigate();
 
   const register = async (e) => {
     e.preventDefault();
@@ -30,14 +28,11 @@ export const Signup = (props) => {
       .then((user) => {
         props.setUserId(user.user.uid);
         createUserAccount(user.user.uid);
+        navigate(`/profile/${user.user.uid}`);
       })
       .catch((error) => {
         console.log(error);
       });
-    //
-    // console.log(e.message);
-    //Errors include
-    //Invalid register, password or email do not work
   };
 
   const registerGoogleAccount = () => {
@@ -46,6 +41,7 @@ export const Signup = (props) => {
         // Store User Data
         props.setUserId(user.user.uid);
         createUserAccountWithGoogle(user.user.uid, user.user.displayName);
+        navigate(`/profile/${user.user.uid}`);
       })
       .catch((e) => console.log(e));
   };
@@ -67,9 +63,7 @@ export const Signup = (props) => {
         twitter: "",
         instagram: "",
       })
-      .then((res) => {
-        console.log("Creating user account worked");
-      })
+      .then((res) => {})
       .catch((e) => console.log(e));
   };
 
@@ -90,9 +84,7 @@ export const Signup = (props) => {
         twitter: "",
         instagram: "",
       })
-      .then((res) => {
-        console.log("Creating user account worked");
-      })
+      .then((res) => {})
       .catch((e) => console.log(e));
   };
 
@@ -160,9 +152,19 @@ export const Signup = (props) => {
           />
         </div>
         <div className={styles.formInputGroup}>
+          {/* <div className={styles.passwordConfirmer}> */}
           <label htmlFor="passwordConfirm" className={styles.formLabel}>
             Confirm password
           </label>
+          {passwordState !== confirmPasswordState ? (
+            <label className={`${styles.formLabel} ${styles.passwordMatcher}`}>
+              Passwords do not match
+            </label>
+          ) : (
+            <></>
+          )}
+          {/* </div> */}
+
           <input
             type="password"
             name="passwordConfirm"

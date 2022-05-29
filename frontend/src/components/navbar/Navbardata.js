@@ -11,7 +11,7 @@ export const data = [
   },
   {
     id: 3,
-    url: "",
+    url: "/chats",
     name: "Chats",
   },
 ];

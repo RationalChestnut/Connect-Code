@@ -28,6 +28,25 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.loadMoreButton:hover {
+  background-color: #228bd6;
+  cursor: pointer;
+}
+
+.endText {
+  text-align: center;
+}
+
+.loadMoreButton {
+  width: 50%;
+  background-color: #2b96e2;
+  padding: 1%;
+  font-size: 18px;
+  color: white;
+  border: none;
+  margin: 1% auto;
+}
+
 @media screen and (max-width: 1400px) {
   .peopleContainer {
     grid-template-columns: 1fr 1fr 1fr;

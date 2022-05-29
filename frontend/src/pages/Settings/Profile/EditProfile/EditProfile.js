@@ -8,7 +8,7 @@ import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { ImCancelCircle } from "react-icons/im";
 import { useNavigate } from "react-router";
 import { ImageCropper } from "./ImageCropper/ImageCropper";
-
+import { BsPersonFill } from "react-icons/bs";
 import {
   AiOutlineGlobal,
   AiFillGithub,
@@ -53,7 +53,7 @@ export const EditProfile = ({ userId }) => {
         navigate(`/profile/${userId}`);
       })
       .catch((e) => {
-        console.log("There was an erro" + e);
+        console.log("There was an error" + e);
         setIsLoading(false);
         navigate(`/profile/${userId}`);
       });
@@ -129,10 +129,19 @@ export const EditProfile = ({ userId }) => {
       profilePicture: profilePictureState,
       description: descriptionState,
       location: locationState,
-      languages: languagesState.split(",").map((language) => language.trim()),
+      languages:
+        languagesState !== "" && languagesState !== null
+          ? languagesState.split(",").map((language) => language.trim())
+          : [],
       yearsOfExperience: yearsOfExperienceState,
-      skills: skillsState.split(",").map((skill) => skill.trim()),
-      seeking: seekingState.split(",").map((seeking) => seeking.trim()),
+      skills:
+        skillsState !== "" && skillsState !== null
+          ? skillsState.split(",").map((skill) => skill.trim())
+          : [],
+      seeking:
+        seekingState !== "" && seekingState !== null
+          ? seekingState.split(",").map((seeking) => seeking.trim())
+          : [],
       website: websiteState,
       github: githubState,
       twitter: twitterState,
@@ -182,11 +191,16 @@ export const EditProfile = ({ userId }) => {
             className={styles.imageContainer}
             onClick={() => setOpenCrop(true)}
           >
-            <img
-              src={profilePicture}
-              alt={nameState}
-              className={styles.profileImage}
-            />
+            {profilePicture !== "" && profilePicture ? (
+              <img
+                src={profilePicture}
+                alt={nameState}
+                className={styles.profileImage}
+              />
+            ) : (
+              <BsPersonFill className={styles.profileImage} />
+            )}
+
             <div className={styles.imageBackground}>
               <AiFillCamera className={styles.imageBackgroundIcon} />
             </div>

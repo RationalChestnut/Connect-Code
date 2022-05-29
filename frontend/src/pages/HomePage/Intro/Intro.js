@@ -30,8 +30,8 @@ const Intro = () => {
         <p className={styles.pitch}>
           Connect with others and start building today
         </p>
-        <Link to="/find-others" className={styles.findOthersLink}>
-          <button className={styles.actionButton}>Find Others</button>
+        <Link to="/signup" className={styles.findOthersLink}>
+          <button className={styles.actionButton}>Sign Up Now</button>
         </Link>
       </div>
     </section>

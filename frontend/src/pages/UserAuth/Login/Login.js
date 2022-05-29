@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
-import NavLogo from "../../../components/navbar/NavLogo.js";
+import { useNavigate } from "react-router";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
 import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 import { auth } from "../../../firebase-config";
@@ -13,6 +13,7 @@ import axios from "axios";
 export const Login = (props) => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
+  const navigate = useNavigate();
 
   const login = async (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export const Login = (props) => {
         passwordState
       );
       props.setUserId(user.user.uid);
-      console.log(user);
+      navigate("/find-others");
     } catch (e) {
       console.log(e);
     }
@@ -33,9 +34,9 @@ export const Login = (props) => {
     signInWithGoogle()
       .then((user) => {
         // Store User Data
-        console.log(user);
         props.setUserId(user.user.uid);
         createUserAccountWithGoogle(user.user.uid, user.user.displayName);
+        navigate("/find-others");
       })
       .catch((e) => console.log(e));
   };
@@ -56,9 +57,6 @@ export const Login = (props) => {
         github: "",
         twitter: "",
         instagram: "",
-      })
-      .then((res) => {
-        console.log("Creating user account worked");
       })
       .catch((e) => console.log(e));
   };

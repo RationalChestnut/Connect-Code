@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 import styles from "./FindOthers.module.css";
@@ -10,7 +10,7 @@ import Profile from "../../components/Profile/Profile";
 import { FilterNavbar } from "../../components/FilterNavbar/FilterNavbar";
 import { Filter } from "./Filter";
 
-export const FindOthers = () => {
+export const FindOthers = ({ userId }) => {
   const [peopleProfiles, setPeopleProfiles] = useState([]);
   const [isFilter, setIsFilter] = useState(false);
   const [skills, setSkills] = useState([]);
@@ -19,36 +19,115 @@ export const FindOthers = () => {
   const [minExperience, setMinExperience] = useState(0);
   const [maxExperience, setMaxExperience] = useState(20);
   const [isLoading, setIsLoading] = useState(false);
+  const [doneLoading, setDoneLoading] = useState(false);
+  const notFirstRender = useRef(false);
 
   const query = async () => {
     setIsLoading(true);
+    console.log(skills);
     let queryLink = `https://ConnectCodeBackend.yxli666.repl.co/user/query?minExperience=${Math.min(
+      minExperience,
+      maxExperience
+    )}&maxExperience=${Math.max(
       minExperience,
       maxExperience
     )}&skills=${skills.join(",")}`;
 
     try {
-      axios.get(queryLink).then((res) => {
-        // const profiles = [];
-        setPeopleProfiles([]);
-        res.data.users.forEach(async (user) => {
-          if (user.age >= minAge && user.age <= maxAge) {
+      const profiles = [];
+      const res = await axios.get(queryLink);
+      const users = res.data.users;
+
+      for (let user of users) {
+        if (
+          user.userId !== userId &&
+          user.age >= minAge &&
+          user.age <= maxAge
+        ) {
+          const userImageRef = ref(storage, `images/${user.userId}`);
+          let url;
+          try {
+            url = await getImageFile(userImageRef);
+            console.log(url);
+          } catch (err) {
+            url = user.userImage;
+          }
+          const newUser = {
+            ...user,
+            image: url,
+          };
+          profiles.push(newUser);
+        }
+      }
+
+      setPeopleProfiles(profiles);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadMore = async () => {
+    setIsLoading(true);
+    let queryLink = `https://ConnectCodeBackend.yxli666.repl.co/user/query?minExperience=${Math.min(
+      minExperience,
+      maxExperience
+    )}&maxExperience=${Math.max(
+      minExperience,
+      maxExperience
+    )}&skills=${skills.join(",")}&startAfter=${
+      peopleProfiles[peopleProfiles.length - 1].userId
+    }`;
+
+    try {
+      const profiles = [];
+      const res = await axios.get(queryLink);
+      const users = res.data.users;
+
+      if (users.length > 0) {
+        for (let user of users) {
+          if (
+            user.userId !== userId &&
+            user.age >= minAge &&
+            user.age <= maxAge
+          ) {
             const userImageRef = ref(storage, `images/${user.userId}`);
-            const url = await getImageFile(userImageRef);
+            let url;
+            try {
+              url = await getImageFile(userImageRef);
+              console.log(url);
+            } catch (err) {
+              url = "";
+            }
             const newUser = {
               ...user,
               image: url,
             };
-            setPeopleProfiles((profiles) => {
-              return [...profiles, newUser];
-            });
+            profiles.push(newUser);
           }
-        });
-        setIsLoading(false);
+        }
+      } else {
+        setDoneLoading(true);
+      }
+      setPeopleProfiles((currentProfiles) => {
+        return [...currentProfiles, ...profiles];
       });
+
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
+
+    axios.get(queryLink).then((res) => {
+      if (res.data.users.length > 0) {
+        setPeopleProfiles((currentPeople) => {
+          return [...currentPeople, ...res.data.users];
+        });
+      } else {
+        setDoneLoading(true);
+      }
+      setIsLoading(false);
+    });
   };
 
   const getImageFile = async (userImageRef) => {
@@ -60,8 +139,33 @@ export const FindOthers = () => {
     return url;
   };
 
+  const populateLookingFor = async () => {
+    if (userId) {
+      console.log("Use Effect Run");
+      try {
+        const res = await axios.get(
+          `https://ConnectCodeBackend.yxli666.repl.co/user/${userId}`
+        );
+        const user = res.data;
+
+        setSkills(user.seeking);
+        console.log("populated");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   useEffect(() => {
-    query();
+    populateLookingFor();
+  }, [userId]);
+
+  useEffect(() => {
+    if (notFirstRender.current) {
+      query();
+    } else {
+      notFirstRender.current = true;
+    }
   }, [skills]);
 
   return (
@@ -114,6 +218,14 @@ export const FindOthers = () => {
             );
           })}
         </div>
+        {/* {!doneLoading && peopleProfiles.length >= 1 ? ( */}
+        <div></div>
+        <button className={styles.loadMoreButton} onClick={loadMore}>
+          Load more
+        </button>
+        {/* ) : (
+                <p className={styles.endText}>End of results</p>
+              )} */}
       </section>
     </section>
   );

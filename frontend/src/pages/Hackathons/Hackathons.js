@@ -12,6 +12,7 @@ const Hackathons = () => {
   const [isFilter, setIsFilter] = useState(false);
   const [hackathons, setHackathons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [doneLoading, setDoneLoading] = useState(false);
 
   const [minPrize, setMinPrize] = useState(0);
   const [maxPrize, setMaxPrize] = useState(100000);
@@ -21,6 +22,7 @@ const Hackathons = () => {
 
   const query = () => {
     setIsLoading(true);
+    setDoneLoading(false);
     let queryLink = `https://ConnectCodeBackend.yxli666.repl.co/hackathons/query?minPrize=${Math.min(
       minPrize,
       maxPrize
@@ -48,9 +50,13 @@ const Hackathons = () => {
     )}&startAfter=${hackathons[hackathons.length - 1].id}`;
 
     axios.get(queryLink).then((res) => {
-      setHackathons((currentHackathons) => {
-        return [...currentHackathons, ...res.data.hackathons];
-      });
+      if (res.data.hackathons.length > 0) {
+        setHackathons((currentHackathons) => {
+          return [...currentHackathons, ...res.data.hackathons];
+        });
+      } else {
+        setDoneLoading(true);
+      }
       setIsLoading(false);
     });
   };
@@ -100,9 +106,13 @@ const Hackathons = () => {
           {hackathons.map((hackathon, index) => {
             return <Hackathon key={hackathon.title + index} data={hackathon} />;
           })}
-          <button className={styles.loadMoreButton} onClick={loadMore}>
-            Load More
-          </button>
+          {!doneLoading && hackathons.length >= 1 ? (
+            <button className={styles.loadMoreButton} onClick={loadMore}>
+              Load more
+            </button>
+          ) : (
+            <p className={styles.endText}>End of results</p>
+          )}
         </div>
       </div>
     </div>

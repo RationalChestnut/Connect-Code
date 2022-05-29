@@ -12,6 +12,7 @@ import {
 import { storage } from "../../../../firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import Loading from "../../../../components/Loading/Loading";
+import { BsPersonFill } from "react-icons/bs";
 
 export const Profile = ({ userId }) => {
   const [nameState, setNameState] = useState("");
@@ -68,19 +69,16 @@ export const Profile = ({ userId }) => {
   };
 
   const getImageFile = () => {
-    console.log("Getting Image");
     setIsLoading(true);
     listAll(userImageRef)
       .then((res) => {
         const item = res.items[0];
         getDownloadURL(item).then((url) => {
-          console.log("Setting Image File to State");
           setProfilePictureState(url);
         });
         setIsLoading(false);
       })
       .catch((e) => {
-        console.log("Error getting image");
         console.log(e);
         setIsLoading(false);
       });
@@ -100,11 +98,15 @@ export const Profile = ({ userId }) => {
           </Link>
         </div>
         <div className={styles.imageContainer}>
-          <img
-            src={profilePictureState}
-            alt={nameState}
-            className={styles.profileImage}
-          />
+          {profilePictureState !== "" && profilePictureState ? (
+            <img
+              src={profilePictureState}
+              alt={nameState}
+              className={styles.profileImage}
+            />
+          ) : (
+            <BsPersonFill className={styles.profileImage} />
+          )}
         </div>
         <div className={styles.nameContainer}>
           <p className={styles.nameContainer}>{nameState}</p>
@@ -113,7 +115,7 @@ export const Profile = ({ userId }) => {
           <p>
             {descriptionState !== null && descriptionState !== ""
               ? descriptionState
-              : "N/A"}
+              : "No description"}
           </p>
         </div>
       </div>
@@ -175,15 +177,23 @@ export const Profile = ({ userId }) => {
               <p className={styles.title}>Website</p>
             </div>
             <p>
-              <a
-                className={styles.personalWebsite}
-                target="_blank"
-                href="www.davidpaccha.io"
-              >
-                {websiteState !== null && websiteState !== ""
-                  ? websiteState
-                  : "N/A"}
-              </a>
+              {websiteState !== null && websiteState !== "" ? (
+                <a
+                  className={styles.personalWebsite}
+                  target="_blank"
+                  href={
+                    websiteState.startsWith("https")
+                      ? websiteState
+                      : `https://${websiteState}`
+                  }
+                >
+                  {websiteState.startsWith("https")
+                    ? websiteState
+                    : `https://${websiteState}`}
+                </a>
+              ) : (
+                <p>N/A</p>
+              )}
             </p>
           </div>
           <div className={styles.socialRow}>
@@ -193,9 +203,23 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Github</p>
             </div>
-            <p>
-              {githubState !== null && githubState !== "" ? githubState : "N/A"}
-            </p>
+            {githubState !== null && githubState !== "" ? (
+              <a
+                className={styles.personalWebsite}
+                target="_blank"
+                href={
+                  githubState.startsWith("https")
+                    ? githubState
+                    : `https://${githubState}`
+                }
+              >
+                {githubState.startsWith("https")
+                  ? githubState
+                  : `https://${githubState}`}
+              </a>
+            ) : (
+              <a className={styles.personalWebsite}>N/A</a>
+            )}
           </div>
           <div className={styles.socialRow}>
             <div className={styles.front}>
@@ -206,11 +230,23 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Twitter</p>
             </div>
-            <p>
-              {twitterState !== null && twitterState !== ""
-                ? twitterState
-                : "N/A"}
-            </p>
+            {twitterState !== null && twitterState !== "" ? (
+              <a
+                className={styles.personalWebsite}
+                target="_blank"
+                href={
+                  twitterState.startsWith("https")
+                    ? twitterState
+                    : `https://${twitterState}`
+                }
+              >
+                {twitterState.startsWith("https")
+                  ? twitterState
+                  : `https://${twitterState}`}
+              </a>
+            ) : (
+              <a className={styles.personalWebsite}>N/A</a>
+            )}
           </div>
           <div className={styles.socialRow}>
             <div className={styles.front}>
@@ -221,11 +257,23 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Instagram</p>
             </div>
-            <p>
-              {instagramState !== null && instagramState !== ""
-                ? instagramState
-                : "N/A"}
-            </p>
+            {instagramState !== null && instagramState !== "" ? (
+              <a
+                className={styles.personalWebsite}
+                target="_blank"
+                href={
+                  instagramState.startsWith("https")
+                    ? instagramState
+                    : `https://${instagramState}`
+                }
+              >
+                {instagramState.startsWith("https")
+                  ? instagramState
+                  : `https://${instagramState}`}
+              </a>
+            ) : (
+              <a className={styles.personalWebsite}>N/A</a>
+            )}
           </div>
         </div>
       </div>

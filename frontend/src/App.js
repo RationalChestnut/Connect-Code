@@ -12,7 +12,7 @@ import { EditProfile } from "./pages/Settings/Profile/EditProfile/EditProfile";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase-config";
 import { Logout } from "./pages/UserAuth/Logout/Logout";
-
+import { Chats } from "./pages/Chats/Chats";
 function App() {
   const [userId, setUserId] = useState(null);
 
@@ -35,6 +35,7 @@ function App() {
         <Route path="/hackathons" element={<Hackathons />} />
         <Route path="/profile/:id" element={<Profile userId={userId} />} />
         <Route path="/edit-profile" element={<EditProfile userId={userId} />} />
+        <Route path="/chats" element={<Chats />} />
         <Route path="/signup" element={<Signup setUserId={setUserId} />} />
         <Route path="/login" element={<Login setUserId={setUserId} />} />
         <Route path="/user/logout" element={<Logout setUserId={setUserId} />} />

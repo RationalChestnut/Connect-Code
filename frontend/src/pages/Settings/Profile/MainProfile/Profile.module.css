@@ -56,10 +56,9 @@
 
 .profileImage {
   border-radius: 100%;
-  /* object-fit: none; */
-  /* object-position: center; */
   width: 300px;
   height: 300px;
+  color: rgba(30, 30, 30, 0.2);
 }
 
 .topLittleContainer {
@@ -96,6 +95,11 @@
   color: black;
   text-decoration: none;
 }
+
+.personalWebsite:hover {
+  text-decoration: underline;
+}
+
 .front {
   display: flex;
   align-items: center;

@@ -119,6 +119,10 @@
   color: black;
 }
 
+.passwordMatcher {
+  color: red;
+}
+
 @media screen and (max-width: 1500px) {
   .puzzlePiece {
     width: 10%;

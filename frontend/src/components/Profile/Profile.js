@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { BsPersonFill } from "react-icons/bs";
 import styles from "./Profile.module.css";
 
 const Profile = (props) => {
@@ -8,12 +9,16 @@ const Profile = (props) => {
   return (
     <div className={styles.profileContainer} style={props.style}>
       <div style={props.style}>
-        <img
-          src={image}
-          alt={name}
-          className={styles.profileImage}
-          style={props.styleImage}
-        />
+        {image && image !== "" ? (
+          <img
+            src={image}
+            alt={name}
+            className={styles.profileImage}
+            style={props.styleImage}
+          />
+        ) : (
+          <BsPersonFill className={styles.profileImage} />
+        )}
         <p className={styles.name}>{name}</p>
         <div className={styles.basicInfo}>
           <p>
