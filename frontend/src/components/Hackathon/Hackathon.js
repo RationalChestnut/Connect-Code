@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { GrFlagFill } from "react-icons/gr";
 import { AiFillCalendar } from "react-icons/ai";
@@ -20,9 +21,10 @@ export const Hackathon = (props) => {
     numParticipants,
     numPeopleWhoNeedTeams,
     tags,
+    id,
   } = props.data;
   return (
-    <a className={styles.card} href={link} target="_blank">
+    <Link to={`/hackathons/${id}`} className={styles.card}>
       <div className={styles.hackathon}>
         <div className={styles.hackathonImage}>
           <img src={image} alt={title} className={styles.hackImage} />
@@ -48,7 +50,7 @@ export const Hackathon = (props) => {
             <div className={styles.location}>
               <span className={styles.globe}>
                 <AiOutlineGlobal />
-              </span>{" "}
+              </span>
               <p className={styles.textStatus}>{location}</p>
             </div>
           </div>
@@ -62,7 +64,7 @@ export const Hackathon = (props) => {
           </div>
           <div className={styles.infoRow}>
             <p>
-              <b>{numPeopleWhoNeedTeams}</b> people who need teams
+              <b>{numPeopleWhoNeedTeams}</b> number of open teams
             </p>
           </div>
         </div>
@@ -93,6 +95,6 @@ export const Hackathon = (props) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };

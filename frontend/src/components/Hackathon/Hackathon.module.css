@@ -123,6 +123,13 @@
   gap: 7px;
 }
 
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .tag {
   font-size: 12px;
   padding: 5px 8px;

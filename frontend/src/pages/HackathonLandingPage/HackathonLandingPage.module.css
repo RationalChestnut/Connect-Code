@@ -1,0 +1,327 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.banner {
+  display: flex;
+  padding: 3% 15%;
+  background-color: #f7f7f7;
+}
+
+.leftBanner {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 75%;
+  margin-right: 1%;
+}
+
+.hackathonLink {
+  color: white;
+  background-color: #228bd6;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 1.5% 2.5%;
+  margin-top: 4%;
+}
+
+.hackathonLink:hover {
+  cursor: pointer;
+  background-color: #1b7dc4;
+}
+
+.bannerTitle {
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 4%;
+}
+
+.bannerDescription {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.bannerTimeLeft {
+  font-size: 12px;
+  padding: 3px 25px;
+  width: 50%;
+  background-color: #228bd6;
+  border-radius: 15px;
+  position: relative;
+  margin-right: 10%;
+  color: white;
+}
+
+.rightBanner {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 2% 2%;
+}
+
+.bannerTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.bannerDuration {
+  display: flex;
+  align-items: center;
+  margin-top: 3.5%;
+  gap: 3%;
+}
+
+.bannerDurationText {
+  font-size: 18px;
+}
+
+.bannerInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.bannerStatus {
+  display: flex;
+  align-items: center;
+  gap: 3.5%;
+}
+
+.bannerNumbers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3.5%;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.bannerBottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.bannerHost {
+  display: flex;
+  gap: 3.5%;
+  align-items: center;
+}
+
+.host {
+  font-size: 15px;
+}
+
+.bannerTagsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4%;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background-color: #9fcdee;
+  color: #228bd6;
+  height: fit-content;
+}
+
+.dot {
+  content: "";
+  background-color: white;
+  position: absolute;
+  left: 0.6rem;
+  height: 5px;
+  width: 5px;
+  border-radius: 5px;
+  top: 50%;
+  margin-top: -2px;
+}
+
+.rule {
+  margin: 5% 0;
+  border-top: 1px solid rgb(211, 211, 211);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.teamsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-top: 1%;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.teamCreationForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-right: 5%;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #228bd6;
+  border-radius: 5px;
+  padding: 2%;
+  font-size: 0.9rem;
+  margin: 1% 0%;
+}
+
+.teamFormItem {
+  width: 50%;
+  margin: 0.5% 0%;
+}
+
+.teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2%;
+  margin: 0% 5% 0% 0%;
+}
+
+.titleTeam {
+  text-align: center;
+}
+
+.createTeam {
+  width: 50%;
+  padding: 1%;
+  color: white;
+  background-color: #228bd6;
+  border: none;
+  border-radius: 10px;
+  margin-top: 0.5%;
+  font-size: 16px;
+}
+
+.createTeam:hover {
+  cursor: pointer;
+  background-color: #1b7dc4;
+}
+
+@media screen and (max-width: 1400px) {
+  .teamsContainer {
+    grid-template-columns: 2fr 3fr;
+  }
+  .teams {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .banner {
+    padding: 3% 10%;
+  }
+  .teamsContainer {
+    grid-template-columns: 3fr 4fr;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .teams {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .teamsContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .banner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .leftBanner {
+    align-items: stretch;
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .hackathonLink {
+    align-self: center;
+    padding: 2.5% 6%;
+    margin: 5%;
+  }
+
+  .rightBanner {
+    margin-top: 5%;
+    padding: 4% 4%;
+  }
+
+  .bannerNumbers {
+    justify-content: flex-start;
+    gap: 5%;
+  }
+
+  .rule {
+    margin: 8% 0;
+  }
+
+  .bannerStatus {
+    gap: 2%;
+  }
+  .teamFormItem {
+    width: 60%;
+  }
+  .teams {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .teamsContainer {
+    grid-template-columns: 1fr;
+  }
+  .teamFormItem {
+    width: 40%;
+  }
+  .createTeam {
+    width: 40%;
+  }
+  .teamCreationForm {
+    margin: 3% 0%;
+  }
+  .teams {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 500px) {
+  .teamFormItem {
+    width: 60%;
+  }
+  .createTeam {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .teams {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 350px) {
+  .teamFormItem {
+    width: 80%;
+  }
+  .createTeam {
+    width: 80%;
+  }
+  .teamCreationForm {
+    margin: 5% 0%;
+  }
+}

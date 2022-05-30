@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase-config";
 import { Logout } from "./pages/UserAuth/Logout/Logout";
 import { Chats } from "./pages/Chats/Chats";
+import { HackathonLandingPage } from "./pages/HackathonLandingPage/HackathonLandingPage";
+import { Protected } from "./pages/ProtectedRoute/Protected";
 function App() {
   const [userId, setUserId] = useState(null);
 
@@ -33,9 +35,38 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/find-others" element={<FindOthers userId={userId} />} />
         <Route path="/hackathons" element={<Hackathons />} />
-        <Route path="/profile/:id" element={<Profile userId={userId} />} />
-        <Route path="/edit-profile" element={<EditProfile userId={userId} />} />
-        <Route path="/chats" element={<Chats />} />
+        <Route
+          path="/hackathons/:id"
+          element={
+            <Protected userId={userId}>
+              <HackathonLandingPage userId={userId} />
+            </Protected>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <Protected userId={userId}>
+              <Profile userId={userId} />
+            </Protected>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <Protected userId={userId}>
+              <EditProfile userId={userId} />
+            </Protected>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <Protected userId={userId}>
+              <Chats />
+            </Protected>
+          }
+        />
         <Route path="/signup" element={<Signup setUserId={setUserId} />} />
         <Route path="/login" element={<Login setUserId={setUserId} />} />
         <Route path="/user/logout" element={<Logout setUserId={setUserId} />} />

@@ -8,7 +8,7 @@ const Profile = (props) => {
 
   return (
     <div className={styles.profileContainer} style={props.style}>
-      <div style={props.style}>
+      <div>
         {image && image !== "" ? (
           <img
             src={image}

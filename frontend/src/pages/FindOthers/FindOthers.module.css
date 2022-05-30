@@ -47,6 +47,11 @@
   margin: 1% auto;
 }
 
+.profileLink {
+  text-decoration: none;
+  color: black;
+}
+
 @media screen and (max-width: 1400px) {
   .peopleContainer {
     grid-template-columns: 1fr 1fr 1fr;

@@ -9,6 +9,7 @@ import { profiles } from "../../data/ProfileData.js";
 import Profile from "../../components/Profile/Profile";
 import { FilterNavbar } from "../../components/FilterNavbar/FilterNavbar";
 import { Filter } from "./Filter";
+import { Link } from "react-router-dom";
 
 export const FindOthers = ({ userId }) => {
   const [peopleProfiles, setPeopleProfiles] = useState([]);
@@ -39,24 +40,40 @@ export const FindOthers = ({ userId }) => {
       const users = res.data.users;
 
       for (let user of users) {
-        if (
-          user.userId !== userId &&
-          user.age >= minAge &&
-          user.age <= maxAge
-        ) {
-          const userImageRef = ref(storage, `images/${user.userId}`);
-          let url;
-          try {
-            url = await getImageFile(userImageRef);
-            console.log(url);
-          } catch (err) {
-            url = user.userImage;
+        if (userId) {
+          if (
+            user.userId !== userId &&
+            user.age >= minAge &&
+            user.age <= maxAge
+          ) {
+            const userImageRef = ref(storage, `images/${user.userId}`);
+            let url;
+            try {
+              url = await getImageFile(userImageRef);
+            } catch (err) {
+              url = user.userImage;
+            }
+            const newUser = {
+              ...user,
+              image: url,
+            };
+            profiles.push(newUser);
           }
-          const newUser = {
-            ...user,
-            image: url,
-          };
-          profiles.push(newUser);
+        } else {
+          if (user.age >= minAge && user.age <= maxAge) {
+            const userImageRef = ref(storage, `images/${user.userId}`);
+            let url;
+            try {
+              url = await getImageFile(userImageRef);
+            } catch (err) {
+              url = user.userImage;
+            }
+            const newUser = {
+              ...user,
+              image: url,
+            };
+            profiles.push(newUser);
+          }
         }
       }
 
@@ -204,28 +221,29 @@ export const FindOthers = ({ userId }) => {
           <Loading isLoading={isLoading} />
           {peopleProfiles.map((person, index) => {
             return (
-              <Profile
+              <Link
+                to={`/profile/${person.userId}`}
                 key={index}
-                className={styles.profile}
-                image={person.image}
-                name={person.name}
-                languages={person.languages}
-                yearsOfExperience={person.yearsOfExperience}
-                skills={person.skills}
-                lookingFor={person.seeking}
-                style={{ border: "none" }}
-              />
+                className={styles.profileLink}
+              >
+                <Profile
+                  className={styles.profile}
+                  image={person.image}
+                  name={person.name}
+                  languages={person.languages}
+                  yearsOfExperience={person.yearsOfExperience}
+                  skills={person.skills}
+                  lookingFor={person.seeking}
+                  style={{ border: "none" }}
+                />
+              </Link>
             );
           })}
         </div>
-        {/* {!doneLoading && peopleProfiles.length >= 1 ? ( */}
         <div></div>
         <button className={styles.loadMoreButton} onClick={loadMore}>
           Load more
         </button>
-        {/* ) : (
-                <p className={styles.endText}>End of results</p>
-              )} */}
       </section>
     </section>
   );

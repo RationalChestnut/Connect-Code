@@ -7,8 +7,8 @@ export const HackathonContainer = () => {
     <section className={styles.hackathonContainer}>
       <p className={styles.heading}>Find Upcoming Hackathons</p>
       <div className={styles.hackathons}>
-        {data.map((hackathon) => {
-          return <Hackathon data={hackathon} />;
+        {data.map((hackathon, index) => {
+          return <Hackathon key={index} data={hackathon} />;
         })}
       </div>
     </section>

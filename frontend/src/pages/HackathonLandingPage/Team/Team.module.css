@@ -1,0 +1,46 @@
+.teamContainer {
+  width: 100%;
+  padding: 4%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 4% 0%;
+  border: 1px solid #228bd6;
+  border-radius: 5px;
+}
+
+.teamMemberDisplay {
+  width: 100%;
+}
+
+.teamTitle {
+  font-weight: 450;
+  font-size: 1.4rem;
+}
+
+.member {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+
+.memberInfo {
+  margin: 0% 2%;
+}
+
+.joinButton {
+  width: 50%;
+  margin-top: 3%;
+  padding: 2%;
+  color: white;
+  background-color: #228bd6;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.joinButton:hover {
+  cursor: pointer;
+  background-color: #1b7dc4;
+}

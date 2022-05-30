@@ -7,7 +7,7 @@ const ProfileContainer = () => {
     <section className={styles.profile}>
       <h1 className={styles.adText}>Find Others Your Skill Level</h1>
       <div className={`${styles.profileContainer} ${styles.profilesContainer}`}>
-        {profiles.map((person) => {
+        {profiles.map((person, index) => {
           return (
             <Profile
               image={person.image}
@@ -18,7 +18,8 @@ const ProfileContainer = () => {
               skills={person.skills}
               lookingFor={person.lookingFor}
               project={person.projectInMind}
-              key={person.id}
+              key={index}
+              styleImage={{ objectFit: "cover" }}
             />
           );
         })}

@@ -8,6 +8,7 @@ import {
   AiFillGithub,
   AiOutlineTwitter,
   AiOutlineInstagram,
+  AiFillMessage,
 } from "react-icons/ai";
 import { storage } from "../../../../firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
@@ -29,12 +30,11 @@ export const Profile = ({ userId }) => {
   const [twitterState, setTwitterState] = useState("");
   const [instagramState, setInstagramState] = useState("");
   const { id } = useParams();
-  const userImageRef = ref(storage, `images/${userId}`);
+  const userImageRef = ref(storage, `images/${userId === id ? userId : id}`);
   const [isLoading, setIsLoading] = useState(false);
 
   const retrieveProfileData = () => {
     getImageFile();
-
     axios
       .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${id}`)
       .then((response) => {
@@ -48,6 +48,7 @@ export const Profile = ({ userId }) => {
           skills,
           seeking,
           website,
+          userImage,
           github,
           twitter,
           instagram,
@@ -64,6 +65,7 @@ export const Profile = ({ userId }) => {
         setGithubState(github);
         setTwitterState(twitter);
         setInstagramState(instagram);
+        setProfilePictureState(userImage);
       })
       .catch((err) => console.log(err));
   };
@@ -79,23 +81,29 @@ export const Profile = ({ userId }) => {
         setIsLoading(false);
       })
       .catch((e) => {
-        console.log(e);
         setIsLoading(false);
       });
   };
 
   useEffect(() => {
     retrieveProfileData();
-  }, [userId]);
+  }, [userId, id]);
 
   return (
     <div className={styles.profileContainer}>
       <Loading isLoading={isLoading} />
       <div className={styles.bigIntro}>
         <div className={styles.editContainer}>
-          <Link to={"/edit-profile"}>
-            <FiEdit className={styles.editButton} />
-          </Link>
+          {id === userId ? (
+            <Link to={"/edit-profile"}>
+              <FiEdit className={styles.editButton} />
+            </Link>
+          ) : (
+            <AiFillMessage
+              className={styles.editButton}
+              onClick={() => alert("Feature coming soon")}
+            />
+          )}
         </div>
         <div className={styles.imageContainer}>
           {profilePictureState !== "" && profilePictureState ? (
@@ -176,8 +184,8 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Website</p>
             </div>
-            <p>
-              {websiteState !== null && websiteState !== "" ? (
+            <div>
+              {websiteState != null && websiteState != "" ? (
                 <a
                   className={styles.personalWebsite}
                   target="_blank"
@@ -194,7 +202,7 @@ export const Profile = ({ userId }) => {
               ) : (
                 <p>N/A</p>
               )}
-            </p>
+            </div>
           </div>
           <div className={styles.socialRow}>
             <div className={styles.front}>
@@ -203,7 +211,7 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Github</p>
             </div>
-            {githubState !== null && githubState !== "" ? (
+            {githubState != null && githubState != "" ? (
               <a
                 className={styles.personalWebsite}
                 target="_blank"
@@ -230,7 +238,7 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Twitter</p>
             </div>
-            {twitterState !== null && twitterState !== "" ? (
+            {twitterState != null && twitterState != "" ? (
               <a
                 className={styles.personalWebsite}
                 target="_blank"
@@ -257,7 +265,7 @@ export const Profile = ({ userId }) => {
               </div>
               <p className={styles.title}>Instagram</p>
             </div>
-            {instagramState !== null && instagramState !== "" ? (
+            {instagramState != null && instagramState != "" ? (
               <a
                 className={styles.personalWebsite}
                 target="_blank"
