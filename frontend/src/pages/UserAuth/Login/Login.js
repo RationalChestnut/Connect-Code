@@ -9,10 +9,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { GoogleComponent } from "../../../components/Google Component/GoogleComponent";
 import { signInWithGoogle } from "../../../firebase-config";
 import axios from "axios";
+import { Error } from "../../../components/errors/Error";
 
 export const Login = (props) => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
+  const [isFailed, setIsFailed] = useState(false);
   const navigate = useNavigate();
 
   const login = async (e) => {
@@ -24,21 +26,21 @@ export const Login = (props) => {
         passwordState
       );
       props.setUserId(user.user.uid);
+      setIsFailed(false);
       navigate("/find-others");
     } catch (e) {
-      console.log(e);
+      setIsFailed(true);
     }
   };
 
   const googleLogin = () => {
-    signInWithGoogle()
-      .then((user) => {
-        // Store User Data
-        props.setUserId(user.user.uid);
-        createUserAccountWithGoogle(user.user.uid, user.user.displayName);
-        navigate("/find-others");
-      })
-      .catch((e) => console.log(e));
+    signInWithGoogle().then((user) => {
+      // Store User Data
+      setIsFailed(false);
+      props.setUserId(user.user.uid);
+      createUserAccountWithGoogle(user.user.uid, user.user.displayName);
+      navigate("/find-others");
+    });
   };
 
   const createUserAccountWithGoogle = (id, name) => {
@@ -58,7 +60,7 @@ export const Login = (props) => {
         twitter: "",
         instagram: "",
       })
-      .catch((e) => console.log(e));
+      .then(() => setIsFailed(false));
   };
 
   return (
@@ -81,6 +83,7 @@ export const Login = (props) => {
         <span className={styles.yellow}>Code</span>
       </h1>
       <form className={styles.formContainer} onSubmit={login}>
+        {isFailed ? <Error text="Credentials Invalid" type="warning" /> : <></>}
         <div className={styles.formInputGroup}>
           <label htmlFor="email" className={styles.formLabel}>
             Email

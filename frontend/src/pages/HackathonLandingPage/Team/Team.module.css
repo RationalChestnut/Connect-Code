@@ -44,3 +44,7 @@
   cursor: pointer;
   background-color: #1b7dc4;
 }
+
+.name {
+  text-align: center;
+}

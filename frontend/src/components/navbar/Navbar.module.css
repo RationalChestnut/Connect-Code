@@ -115,6 +115,11 @@
   align-items: center;
 }
 
+.navItemContainer {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (max-width: 1300px) {
   .navLinks {
     width: 90%;

@@ -22,6 +22,9 @@ function App() {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUserId(currentUser.uid);
+        localStorage.setItem("user", true);
+      } else {
+        localStorage.removeItem("user", false);
       }
     });
   }, []);

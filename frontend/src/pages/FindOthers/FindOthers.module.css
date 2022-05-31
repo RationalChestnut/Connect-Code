@@ -4,7 +4,6 @@
   padding: 0% 2%;
   display: grid;
   grid-template-columns: 3fr 12fr;
-  margin-top: 1%;
 }
 
 .filterNavbarContainer {

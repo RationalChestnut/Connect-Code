@@ -8,6 +8,7 @@ import { auth } from "../../../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { GoogleComponent } from "../../../components/Google Component/GoogleComponent";
 import { signInWithGoogle } from "../../../firebase-config";
+import { Error } from "../../../components/errors/Error";
 import axios from "axios";
 
 export const Signup = (props) => {
@@ -15,6 +16,7 @@ export const Signup = (props) => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  const [isFailed, setIsFailed] = useState(false);
   const navigate = useNavigate();
 
   const register = async (e) => {
@@ -31,6 +33,7 @@ export const Signup = (props) => {
         navigate(`/profile/${user.user.uid}`);
       })
       .catch((error) => {
+        setIsFailed(true);
         console.log(error);
       });
   };
@@ -109,6 +112,12 @@ export const Signup = (props) => {
         Community!
       </h1>
       <form className={styles.formContainer} onSubmit={register}>
+        {isFailed ? (
+          <Error text="Unexpected Error, Please Try Again Later" />
+        ) : (
+          <></>
+        )}
+
         <div className={styles.formInputGroup}>
           <label htmlFor="name" className={styles.formLabel}>
             Name

@@ -1,0 +1,21 @@
+.errorContainer {
+  padding: 2%;
+  margin: 1%;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+}
+
+.green {
+  background-color: rgb(212, 237, 218);
+  color: #155724;
+}
+.yellow {
+  background-color: rgb(255, 243, 205);
+  color: rgb(133, 100, 4);
+}
+
+.red {
+  background-color: rgb(249, 215, 218);
+  color: rgb(114, 28, 36);
+}

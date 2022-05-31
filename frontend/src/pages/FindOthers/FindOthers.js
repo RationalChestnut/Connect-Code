@@ -25,7 +25,6 @@ export const FindOthers = ({ userId }) => {
 
   const query = async () => {
     setIsLoading(true);
-    console.log(skills);
     let queryLink = `https://ConnectCodeBackend.yxli666.repl.co/user/query?minExperience=${Math.min(
       minExperience,
       maxExperience
@@ -103,48 +102,53 @@ export const FindOthers = ({ userId }) => {
 
       if (users.length > 0) {
         for (let user of users) {
-          if (
-            user.userId !== userId &&
-            user.age >= minAge &&
-            user.age <= maxAge
-          ) {
-            const userImageRef = ref(storage, `images/${user.userId}`);
-            let url;
-            try {
-              url = await getImageFile(userImageRef);
-              console.log(url);
-            } catch (err) {
-              url = "";
+          if (userId) {
+            if (
+              user.userId !== userId &&
+              user.age >= minAge &&
+              user.age <= maxAge
+            ) {
+              const userImageRef = ref(storage, `images/${user.userId}`);
+              let url;
+              try {
+                url = await getImageFile(userImageRef);
+              } catch (err) {
+                url = user.userImage;
+              }
+              const newUser = {
+                ...user,
+                image: url,
+              };
+              profiles.push(newUser);
             }
-            const newUser = {
-              ...user,
-              image: url,
-            };
-            profiles.push(newUser);
+          } else {
+            if (user.age >= minAge && user.age <= maxAge) {
+              const userImageRef = ref(storage, `images/${user.userId}`);
+              let url;
+              try {
+                url = await getImageFile(userImageRef);
+              } catch (err) {
+                url = user.userImage;
+              }
+              const newUser = {
+                ...user,
+                image: url,
+              };
+              profiles.push(newUser);
+            }
           }
         }
       } else {
         setDoneLoading(true);
       }
+
       setPeopleProfiles((currentProfiles) => {
         return [...currentProfiles, ...profiles];
       });
-
       setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
-
-    axios.get(queryLink).then((res) => {
-      if (res.data.users.length > 0) {
-        setPeopleProfiles((currentPeople) => {
-          return [...currentPeople, ...res.data.users];
-        });
-      } else {
-        setDoneLoading(true);
-      }
-      setIsLoading(false);
-    });
   };
 
   const getImageFile = async (userImageRef) => {
@@ -158,7 +162,6 @@ export const FindOthers = ({ userId }) => {
 
   const populateLookingFor = async () => {
     if (userId) {
-      console.log("Use Effect Run");
       try {
         const res = await axios.get(
           `https://ConnectCodeBackend.yxli666.repl.co/user/${userId}`
@@ -166,7 +169,6 @@ export const FindOthers = ({ userId }) => {
         const user = res.data;
 
         setSkills(user.seeking);
-        console.log("populated");
       } catch (err) {
         console.log(err);
       }
@@ -177,8 +179,10 @@ export const FindOthers = ({ userId }) => {
     populateLookingFor();
   }, [userId]);
 
+  useEffect(() => {}, [peopleProfiles]);
+
   useEffect(() => {
-    if (notFirstRender.current) {
+    if (notFirstRender.current || !userId) {
       query();
     } else {
       notFirstRender.current = true;
@@ -241,9 +245,13 @@ export const FindOthers = ({ userId }) => {
           })}
         </div>
         <div></div>
-        <button className={styles.loadMoreButton} onClick={loadMore}>
-          Load more
-        </button>
+        {!doneLoading && peopleProfiles.length >= 1 ? (
+          <button className={styles.loadMoreButton} onClick={loadMore}>
+            Load more
+          </button>
+        ) : (
+          <p className={styles.endText}>End of results</p>
+        )}
       </section>
     </section>
   );
