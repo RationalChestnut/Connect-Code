@@ -3,7 +3,6 @@ import block from "../images/blockchain_image.jpeg";
 import go from "../images/go_hack_image.png";
 export const data = [
   {
-    id: 1,
     title: "High Performance Blockchain Hackathon",
     host: "Google",
     image: block,
@@ -17,7 +16,6 @@ export const data = [
     tags: ["Web", "App", "Education", "Beginner Friendly"],
   },
   {
-    id: 2,
     title: "Go Hack",
     host: "Popper Inc",
     image: go,
@@ -31,7 +29,6 @@ export const data = [
     tags: ["Web", "App", "Education", "Go"],
   },
   {
-    id: 3,
     title: "Panther Hacks",
     host: "Google",
     image: panther,
