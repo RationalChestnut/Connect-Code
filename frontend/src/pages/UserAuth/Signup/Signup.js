@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import redPuzzlePiece from "../../../images/puzzle_red.png";
@@ -10,14 +10,23 @@ import { GoogleComponent } from "../../../components/Google Component/GoogleComp
 import { signInWithGoogle } from "../../../firebase-config";
 import { Error } from "../../../components/errors/Error";
 import axios from "axios";
-
+import { FloatingMessage } from "../../../components/FloatingMessage/FloatingMessage";
 export const Signup = (props) => {
   const [nameState, setNameState] = useState("");
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
   const [isFailed, setIsFailed] = useState(false);
+  const [floatingMessage, setFloatingMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const message = localStorage.getItem("message");
+    if (message && message !== "") {
+      setFloatingMessage(message);
+      localStorage.removeItem("message");
+    }
+  }, []);
 
   const register = async (e) => {
     e.preventDefault();
@@ -93,6 +102,14 @@ export const Signup = (props) => {
 
   return (
     <div className={styles.loginContainer}>
+      {floatingMessage != null && floatingMessage !== "" ? (
+        <FloatingMessage
+          message="Please login to access that route"
+          type="warning"
+        />
+      ) : (
+        <></>
+      )}
       <div className={styles.puzzlePieces}>
         <img
           src={redPuzzlePiece}

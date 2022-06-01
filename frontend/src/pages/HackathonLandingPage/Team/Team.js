@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styles from "./Team.module.css";
-
+import { Link } from "react-router-dom";
 export const Team = ({
   teamName,
   teamMembers,
@@ -27,7 +27,10 @@ export const Team = ({
     await axios
       .get(`https://ConnectCodeBackend.yxli666.repl.co/user/${uid}`)
       .then((res) => {
-        setNames((names) => [...names, res.data.name]);
+        setNames((names) => [
+          ...names,
+          { name: res.data.name, id: res.data.userId },
+        ]);
       });
   };
 
@@ -43,9 +46,13 @@ export const Team = ({
       <div className={styles.teamMemberDisplay}>
         {names.map((name, index) => {
           return (
-            <p className={styles.name} key={index}>
-              {name}
-            </p>
+            <Link
+              to={`/profile/${name.id}`}
+              key={index}
+              className={styles.link}
+            >
+              <p className={styles.name}>{name.name}</p>
+            </Link>
           );
         })}
       </div>

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ProfileContainer.module.css";
 import { profiles } from "../../../data/ProfileData";
 import Profile from "../../../components/Profile/Profile";
+import { Link } from "react-router-dom";
 const ProfileContainer = () => {
   return (
     <section className={styles.profile}>
@@ -9,18 +10,19 @@ const ProfileContainer = () => {
       <div className={`${styles.profileContainer} ${styles.profilesContainer}`}>
         {profiles.map((person, index) => {
           return (
-            <Profile
-              image={person.image}
-              name={person.name}
-              languages={person.languages}
-              github={person.github}
-              yearsOfExperience={person.yearsOfExperience}
-              skills={person.skills}
-              lookingFor={person.lookingFor}
-              project={person.projectInMind}
-              key={index}
-              styleImage={{ objectFit: "cover" }}
-            />
+            <Link to="/find-others" key={index} className={styles.link}>
+              <Profile
+                image={person.image}
+                name={person.name}
+                languages={person.languages}
+                github={person.github}
+                yearsOfExperience={person.yearsOfExperience}
+                skills={person.skills}
+                lookingFor={person.lookingFor}
+                project={person.projectInMind}
+                styleImage={{ objectFit: "cover" }}
+              />
+            </Link>
           );
         })}
       </div>

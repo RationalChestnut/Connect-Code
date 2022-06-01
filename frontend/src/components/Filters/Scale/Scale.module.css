@@ -65,7 +65,6 @@ input[type="number"] {
 .rangeInput {
   position: relative;
   margin-bottom: 2%;
-  /* z-index: -1; */
 }
 
 .rangeInput input {
@@ -76,32 +75,33 @@ input[type="number"] {
   -webkit-appearance: none;
   background: none;
   pointer-events: none;
-  /* z-index: 10; */
+  /* z-index: 20; */
 }
 
 input[type="range"]::-webkit-slider-thumb {
   height: 17px;
   width: 17px;
-  background: #228bd6;
+  background-color: #228bd6;
   -webkit-appearance: none;
   border-radius: 50%;
+  z-index: 12;
   pointer-events: auto;
-  z-index: 11;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
   cursor: pointer;
 }
 
-input[type="range"]::-moz-slider-thumb {
+input[type="range"]::-moz-range-thumb {
   height: 17px;
   width: 17px;
-  background: #228bd6;
-  -moz-appearance: none;
+  background-color: #228bd6;
+  -moz-appearance: all;
   border-radius: 50%;
   pointer-events: auto;
   border: none;
-  z-index: 11;
+  z-index: 12;
 }
-input[type="range"]::-moz-slider-thumb:hover {
+
+input[type="range"]::-moz-range-thumb:hover {
   cursor: pointer;
 }

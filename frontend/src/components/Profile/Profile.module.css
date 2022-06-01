@@ -4,6 +4,8 @@
   flex-direction: column;
   text-align: center;
   line-height: 25px;
+  height: 100%;
+  min-height: 100%;
   padding: 4% 10%;
 }
 

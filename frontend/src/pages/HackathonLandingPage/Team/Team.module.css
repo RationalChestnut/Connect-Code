@@ -17,6 +17,12 @@
 .teamTitle {
   font-weight: 450;
   font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
 }
 
 .member {

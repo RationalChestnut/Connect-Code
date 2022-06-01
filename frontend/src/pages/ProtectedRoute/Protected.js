@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router";
 
-export const Protected = ({ userId, children, hasRendered }) => {
+export const Protected = ({ children }) => {
   const isUser = localStorage.getItem("user");
-
+  if (!isUser) {
+    localStorage.setItem("message", "Please login first.");
+  }
   // let component = children;
 
   return (

@@ -22,11 +22,10 @@ export const Scale = ({ min, max, setMin, setMax, onMouseUp }) => {
           max={max}
           value={valueMinRange}
           onMouseUp={onMouseUp}
+          onTouchEnd={onMouseUp}
           onChange={(e) => {
-            // if (e.target.value < valueMaxRange) {
             setValueMinRange(parseInt(e.target.value));
             setMin(e.target.value);
-            // }
           }}
         />
         <input
@@ -36,11 +35,10 @@ export const Scale = ({ min, max, setMin, setMax, onMouseUp }) => {
           max={max}
           value={valueMaxRange}
           onMouseUp={onMouseUp}
+          onTouchEnd={onMouseUp}
           onChange={(e) => {
-            // if (e.target.value > valueMinRange) {
             setValueMaxRange(parseInt(e.target.value));
             setMax(e.target.value);
-            // }
           }}
         />
       </div>

@@ -1,0 +1,18 @@
+.messageContainer {
+  width: fit-content;
+  padding: 2% 2%;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2% 2%;
+  position: absolute;
+  text-align: center;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  font-size: 25px;
+  color: white;
+  z-index: 1000;
+  background-color: rgb(255, 243, 205);
+  color: rgb(133, 100, 4);
+}

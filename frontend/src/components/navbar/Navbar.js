@@ -78,7 +78,15 @@ export const Navbar = (props) => {
             <div className={styles.mobileSignupContainer}>
               {props.isLoggedIn ? (
                 <div className={styles.settingsMobileContainer}>
-                  <Settings display={true} userId={props.userId} />
+                  <div
+                    onClick={() => {
+                      if (isBurger) {
+                        setIsBurger(false);
+                      }
+                    }}
+                  >
+                    <Settings display={true} userId={props.userId} />
+                  </div>
                 </div>
               ) : (
                 <div className={styles.navButtons}>

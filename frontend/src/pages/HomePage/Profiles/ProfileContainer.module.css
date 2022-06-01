@@ -16,9 +16,17 @@
   width: 75%;
 }
 
-@media screen and (max-width: 1000px) {
+.link {
+  text-decoration: none;
+  color: black;
+  margin: 0% 4%;
+  height: 100%;
+}
+
+@media screen and (max-width: 800px) {
   .profileContainer {
     display: flex;
+    align-items: stretch;
     flex-wrap: nowrap;
     overflow-x: auto;
   }
