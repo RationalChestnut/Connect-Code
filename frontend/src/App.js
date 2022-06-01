@@ -35,7 +35,7 @@ function App() {
         <Navbar isLoggedIn={userId != null ? true : false} userId={userId} />
       </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home userId={userId} />} />
         <Route path="/find-others" element={<FindOthers userId={userId} />} />
         <Route path="/hackathons" element={<Hackathons />} />
         <Route

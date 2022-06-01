@@ -5,7 +5,7 @@ import yellowPuzzlePiece from "../../../images/puzzle_yellow.png";
 import halfPuzzle from "../../../images/half_puzzle.png";
 import { Link } from "react-router-dom";
 
-const Intro = () => {
+const Intro = ({ userId }) => {
   return (
     <section className={styles.intro}>
       <div className={styles.puzzlePieces}>
@@ -30,9 +30,15 @@ const Intro = () => {
         <p className={styles.pitch}>
           Connect with others and start building today
         </p>
-        <Link to="/signup" className={styles.findOthersLink}>
-          <button className={styles.actionButton}>Sign Up Now</button>
-        </Link>
+        {userId != null && userId !== "" ? (
+          <Link to="/find-others" className={styles.findOthersLink}>
+            <button className={styles.actionButton}>Find Others</button>
+          </Link>
+        ) : (
+          <Link to="/signup" className={styles.findOthersLink}>
+            <button className={styles.actionButton}>Sign Up Now</button>
+          </Link>
+        )}
       </div>
     </section>
   );

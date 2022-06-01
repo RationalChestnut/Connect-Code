@@ -4,10 +4,10 @@ import styles from "./Home.module.css";
 import Intro from "./Intro/Intro";
 import ProfileContainer from "./Profiles/ProfileContainer";
 import { HackathonContainer } from "./UpcomingHackathons/HackathonContainer";
-const Home = () => {
+const Home = ({ userId }) => {
   return (
     <section className={styles.home}>
-      <Intro />
+      <Intro userId={userId} />
       <div className={styles.intro}>
         <ProfileContainer />
       </div>

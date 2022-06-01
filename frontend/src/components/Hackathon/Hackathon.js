@@ -11,18 +11,25 @@ import styles from "./Hackathon.module.css";
 export const Hackathon = (props) => {
   const {
     title,
-    link,
+    teams,
     host,
     image,
     startDate,
     endDate,
     location,
     amountInPrizes,
-    numParticipants,
     numPeopleWhoNeedTeams,
     tags,
     id,
   } = props.data;
+
+  let numParticipants = 0;
+  if (teams) {
+    for (let team of teams) {
+      numParticipants += team.members.length;
+    }
+  }
+
   const hackathon = (
     <div className={styles.hackathon}>
       <div className={styles.hackathonImage}>
