@@ -1,0 +1,66 @@
+.chatDisplayContainer {
+  width: 100%;
+  height: 50px;
+  padding: 2% 2%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  margin: 3% 0%;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.personInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.personName {
+  font-weight: 600;
+}
+
+.message {
+  /* font-weight: 600; */
+  color: rgb(179, 179, 179);
+}
+
+.profileImageContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileImage {
+  object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+
+.messagingInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.messageTime {
+  color: rgb(179, 179, 179);
+}
+
+.numMessages {
+  background-color: #2b96e2;
+  padding: 1% 5%;
+  text-align: center;
+  color: white;
+  border-radius: 25%;
+  font-weight: bold;
+}
