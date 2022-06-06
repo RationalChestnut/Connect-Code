@@ -1,0 +1,6 @@
+.protectedWrapper {
+  width: 100%;
+  height: calc(100% - 75px);
+  position: relative;
+  /* height: 100%; */
+}

@@ -66,7 +66,7 @@ function App() {
           path="/chats"
           element={
             <Protected userId={userId}>
-              <Chats />
+              <Chats userId={userId} />
             </Protected>
           }
         />

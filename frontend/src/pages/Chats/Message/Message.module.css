@@ -1,0 +1,43 @@
+.messageContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 1% 0%;
+}
+
+.messageContainerByOthers {
+  flex-direction: row;
+}
+
+.message {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sentByMe {
+  margin-right: 1%;
+  background-color: white;
+  color: black;
+  border-radius: 10px 10px 0px 10px;
+}
+
+.sentByOthers {
+  margin-left: 1%;
+  color: white;
+  background-color: #2b96e2;
+  border-radius: 10px 10px 10px 0px;
+}
+
+.profilePicture {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.time {
+  align-self: flex-end;
+  margin: 4px;
+  color: rgb(179, 179, 179);
+}

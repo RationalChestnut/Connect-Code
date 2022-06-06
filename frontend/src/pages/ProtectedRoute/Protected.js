@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router";
-
+import styles from "./Protected.module.css";
 export const Protected = ({ children }) => {
   const isUser = localStorage.getItem("user");
   if (!isUser) {
@@ -9,7 +9,7 @@ export const Protected = ({ children }) => {
   // let component = children;
 
   return (
-    <div>
+    <div className={styles.protectedWrapper}>
       {!isUser && <Navigate to="/signup" replace />}
       {children}
     </div>
